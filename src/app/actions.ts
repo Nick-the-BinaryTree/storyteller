@@ -1,15 +1,5 @@
-import { FourTreeType } from "src/data_structures/four-tree";
-
-export type CharacterType = {
-    name: string,
-    defaultImageURL: string,
-    moodImageURLs: { [key: string]: string } // string key and value
-};
-export type StageType = {
-    name: string,
-    backgroundImageURL: string,
-    dialog: FourTreeType
-};
+import { FourTree } from "src/data-structures/four-tree";
+import { CharacterType, StageType } from './store';
 
 export const ADD_CHARACTER = 'ADD_CHARACTER';
 export const ADD_STAGE = 'ADD_STAGE';
@@ -22,5 +12,5 @@ export const addCharacter = (payload: CharacterType) => ({ type: ADD_CHARACTER, 
 export const addStage = (payload: StageType) => ({ type: ADD_STAGE, payload });
 export const editCharacter = (payload: CharacterType) => ({ type: EDIT_CHARACTER, payload });
 export const editStageBackground = (payload: string) => ({ type: EDIT_STAGE_BACKGROUND, payload });
-export const editStageDialog = (payload: FourTreeType) => ({ type: EDIT_STAGE_DIALOG, payload });
+export const editStageDialog = (payload: FourTree) => ({ type: EDIT_STAGE_DIALOG, payload });
 export const editStageMusic = (payload: string) => ({ type: EDIT_STAGE_MUSIC, payload });
