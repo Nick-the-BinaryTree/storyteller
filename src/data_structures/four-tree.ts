@@ -11,16 +11,14 @@ export const createFourTreeNode = (dialog: string, mood: string,
     dialog, mood, nextAct, speaker
 });
 
-const fourNulls = [null, null, null, null];
-
 export class FourTree {
     arr: FourTreeArrayType = [];
 
     constructor() { }
 
     add(i: number, n: FourTreeNodeType) {
-        if (i === 0) {
-            this.arr = [n].concat(fourNulls);
+        if (i === 0 && this.arr[i] == null) {
+            this.arr = [n, null, null, null, null];
             return;
         }
         const j = this.firstFreeKid(i);
@@ -28,11 +26,12 @@ export class FourTree {
         if (j == null) {
             return;
         }
-
         this.arr[j] = n;
+        
+        const newRequiredLength = this.kthChild(j, 4);
 
-        if (this.kthChild(j, 4) >= this.arr.length) {
-            this.arr.concat(fourNulls);
+        while (this.arr.length < newRequiredLength) {
+            this.arr.push(null);
         }
     }
 
@@ -60,21 +59,20 @@ export class FourTree {
             this.arr = [];
             return;
         }
-        const toRemove = [];
 
         const removeHelper = (i: number): Array<number> => {
-            const res = [i];
+            let res = [i];
 
             for (let k=1; k<=4; k++) {
                 let j = this.kthChild(i, k);
 
                 if (j < this.arr.length && this.arr[j] != null) {
-                    res.concat(removeHelper(j));
+                    res = res.concat(removeHelper(j));
                 }
             }
             return res;
         }
-        toRemove.concat(removeHelper(i));
+        const toRemove = removeHelper(i);
 
         for (let removeIndex of toRemove) {
             this.arr[removeIndex] = null;
