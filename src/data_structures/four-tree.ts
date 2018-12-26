@@ -1,7 +1,3 @@
-type oneToFour = 1 | 2| 3| 4;
-
-export type FourTreeType = typeof FourTree;
-
 export type FourTreeNodeType = {
     dialog: string,
     mood: string,
@@ -22,7 +18,7 @@ export class FourTree {
 
     constructor() { }
 
-    addNode(i: number, n: FourTreeNodeType) {
+    add(i: number, n: FourTreeNodeType) {
         if (i === 0) {
             this.arr = [n].concat(fourNulls);
             return;
@@ -51,11 +47,15 @@ export class FourTree {
         return null;
     }
 
+    get(i: number): FourTreeNodeType {
+        return this.arr[i];
+    }
+
     kthChild(i: number, k: number) {
         return i*4+k;
     }
 
-    removeNode(i: number) {
+    remove(i: number) {
         if (i === 0) {
             this.arr = [];
             return;
