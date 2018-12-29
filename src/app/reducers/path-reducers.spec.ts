@@ -9,7 +9,7 @@ let state: IAppState;
 
 describe('addPathReducer', () => {
     beforeEach(() => {
-        state = INITIAL_STATE;
+        state = copyState(INITIAL_STATE);
     });
 
     it('adds a new path from initial state', () => {
@@ -47,7 +47,7 @@ describe('addPathReducer', () => {
 
 describe('deletePathReducer', () => {
     beforeEach(() => {
-        state = INITIAL_STATE;
+        state = copyState(INITIAL_STATE);
     });
 
     it('does not delete the default path', () => {
@@ -68,7 +68,7 @@ describe('deletePathReducer', () => {
 
 describe('switchPathReducer', () => {
     beforeEach(() => {
-        state = INITIAL_STATE;
+        state = copyState(INITIAL_STATE);
     });
 
     it('does not switch to a non-existent path', () => {

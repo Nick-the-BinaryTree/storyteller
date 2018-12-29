@@ -6,10 +6,8 @@ export const addCharacterReducer = (state: IAppState,
     const newState = copyState(state);
     const act = getAct(newState);
 
-    for (const character of act.characters) {
-        if (character.name === payload.name) {
-            return state;
-        }
+    if (act.characters.some(c => c.name === payload.name)) {
+        return state;
     }
     act.characters.push(payload);
 

@@ -13,7 +13,7 @@ let state: IAppState;
 
 describe('addCharacterReducer', () => {
     beforeEach(() => {
-        state = INITIAL_STATE;
+        state = copyState(INITIAL_STATE);
     });
 
     it('adds a character to an act on the default path', () => {
@@ -21,7 +21,7 @@ describe('addCharacterReducer', () => {
         const act = getAct(newState);
 
         expect(act.characters.length).toBe(1);
-        expect(act.characters[0].name).toBe('Mortimore');
+        expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
     });
 
     it('adds multiple characters to an act on the default path', () => {
@@ -33,7 +33,7 @@ describe('addCharacterReducer', () => {
         const act = getAct(newState);
 
         expect(act.characters.length).toBe(2);
-        expect(act.characters[0].name).toBe('Mortimore');
+        expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
         expect(act.characters[1].name).toBe(TEST_NAME_TWO);
     });
 
@@ -49,10 +49,8 @@ describe('addCharacterReducer', () => {
 });
 
 describe('deleteCharacterReducer', () => {
-    let state: IAppState;
-
     beforeEach(() => {
-        state = INITIAL_STATE;
+        state = copyState(INITIAL_STATE);
     });
 
     it('deletes a character from an act on the default path', () => {
@@ -60,7 +58,6 @@ describe('deleteCharacterReducer', () => {
         let act = getAct(newState);
 
         expect(act.characters.length).toBe(1);
-        expect(act.characters[0].name).toBe('Mortimore');
 
         newState = deleteCharacterReducer(newState, TEST_CHARACTER.name);
         act = getAct(newState);
@@ -88,23 +85,21 @@ describe('deleteCharacterReducer', () => {
 });
 
 describe('editCharacterReducer', () => {
-    let state: IAppState;
-
     beforeEach(() => {
-        state = INITIAL_STATE;
+        state = copyState(INITIAL_STATE);
     });
 
     it('does not edit a non-existent character', () => {
         let newState = addCharacterReducer(state, TEST_CHARACTER);
         let act = getAct(newState);
 
-        expect(act.characters[0].name).toBe('Mortimore');
+        expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
 
         newState = editCharacterReducer(newState,
-            { ...TEST_CHARACTER, name: 'Gregory' });
+            { ...TEST_CHARACTER, name: TEST_NAME_TWO });
         act = getAct(newState);
         
-        expect(act.characters[0].name).toBe('Mortimore');
+        expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
     });
 
     it('edits an existing character', () => {
