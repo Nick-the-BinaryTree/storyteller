@@ -33,14 +33,15 @@ export function rootReducer(state: IAppState,
     action: {type: string, payload: any}): IAppState {
     switch (action.type) {
         case ADD_CHARACTER:
-            return addCharacterReducer(state, action.payload);
+            break;
         case ADD_STAGE:
-            return addStageReducer(state, action.payload);
+            break;
         case EDIT_CHARACTER:
             break;
         case EDIT_STAGE:
             break;
     }
+    return INITIAL_STATE;
 }
 
 export const INITIAL_STATE: IAppState = {

@@ -21,6 +21,7 @@ export const switchPathReducer = (state: IAppState,
     }
     const newState = copyState(state);
 
+    newState.currentAct = 0;
     newState.currentPath = payload;
 
     return newState;

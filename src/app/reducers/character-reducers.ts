@@ -24,8 +24,9 @@ export const deleteCharacterReducer = (state: IAppState,
     if (act.characters.some(c => c.name === payload)) {
         return state;
     }
-    delete act.characters[
-        act.characters.map(c => c.name).indexOf(payload)
+    act.characters.splice[
+        act.characters.map(c => c.name).indexOf(payload),
+        1
     ];
     return newState;
 };

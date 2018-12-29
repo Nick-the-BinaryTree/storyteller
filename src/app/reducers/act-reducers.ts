@@ -12,6 +12,7 @@ export const addActReducer = (state: IAppState): IAppState => {
         toPush = copyAct(DEFAULT_ACT);
     }
     newState.paths[state.currentPath].push(toPush);
+    newState.currentAct = newState.paths[state.currentPath].length-1;
 
     return newState;
 };
@@ -19,7 +20,9 @@ export const addActReducer = (state: IAppState): IAppState => {
 export const deleteActReducer = (state: IAppState): IAppState => {
     const newState = copyState(state);
 
-    delete newState.paths[state.currentPath][state.currentAct];
+    newState.paths[state.currentPath]
+        .splice(state.currentAct, 1);
+    newState.currentAct--;
 
     return newState;
 };
