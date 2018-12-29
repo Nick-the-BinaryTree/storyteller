@@ -10,10 +10,9 @@ const TEST_STATE = {
         default: [DEFAULT_ACT],
         alt: []
 }};
+let state: IAppState;
 
 describe('addActReducer', () => {
-    let state: IAppState;
-
     beforeEach(() => {
         state = copyState(TEST_STATE);
     });

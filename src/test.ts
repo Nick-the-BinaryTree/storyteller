@@ -15,6 +15,6 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting()
 );
 // Then we find all the tests.
-const context = require.context('./', true, /character-reducers\.spec\.ts$/);;// require.context('./', true, /\.spec\.ts$/);
+const context = require.context('./', true, /path-reducers\.spec\.ts$/);;// require.context('./', true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);

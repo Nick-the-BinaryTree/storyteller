@@ -28,6 +28,7 @@ export interface IAppState {
 }
 
 export const DEFAULT_ACT = { characters: [], stages: [] };
+export const DEFAULT_PATH_NAME = 'default';
 
 export function rootReducer(state: IAppState, 
     action: {type: string, payload: any}): IAppState {

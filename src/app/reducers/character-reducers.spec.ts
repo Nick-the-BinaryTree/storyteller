@@ -9,10 +9,9 @@ const TEST_CHARACTER = {
     moodImageURLs: {}
 };
 const TEST_NAME_TWO = 'Gregory';
+let state: IAppState;
 
 describe('addCharacterReducer', () => {
-    let state: IAppState;
-
     beforeEach(() => {
         state = INITIAL_STATE;
     });
