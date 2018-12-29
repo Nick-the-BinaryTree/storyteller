@@ -29,7 +29,7 @@ export const deleteActReducer = (state: IAppState): IAppState => {
 
 export const switchActReducer = (state: IAppState, 
     payload: number): IAppState => {
-    if (0 > payload && payload >= state.paths[state.currentPath].length) {
+    if (payload < 0 || payload >= state.paths[state.currentPath].length) {
         return state;
     }
     const newState = copyState(state);

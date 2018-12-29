@@ -3,7 +3,8 @@ import { addActReducer, deleteActReducer,
 import { copyState } from './reducer.utils'
 import { DEFAULT_ACT, IAppState } from '../store';
 
-const TEST_STATE = { currentAct: 0,
+const TEST_STATE = { 
+    currentAct: 0,
     currentPath: 'default',
     paths: {
         default: [DEFAULT_ACT],
@@ -110,8 +111,8 @@ describe('switchActReducer', () => {
     it('switches acts on default path', () => {
         let newState = addActReducer(addActReducer(addActReducer(state)));
 
-        expect(newState.paths.default.length).toBe(3);
-        expect(newState.currentAct).toBe(2);
+        expect(newState.paths.default.length).toBe(4);
+        expect(newState.currentAct).toBe(3);
 
         newState = switchActReducer(newState, 0);
         expect(newState.currentAct).toBe(0);
@@ -124,14 +125,12 @@ describe('switchActReducer', () => {
         let newState = copyState(state);
         
         newState.currentPath = 'alt';
-        newState = addActReducer(newState);
+        newState = addActReducer(addActReducer(newState));
 
-        expect(newState.paths.alt.length).toBe(1);
+        expect(newState.paths.alt.length).toBe(2);
+        expect(newState.currentAct).toBe(1);
 
         newState = switchActReducer(newState, 0);
         expect(newState.currentAct).toBe(0);
-
-        newState = switchActReducer(newState, 1);
-        expect(newState.currentAct).toBe(1);
     });
 });
