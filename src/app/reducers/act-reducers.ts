@@ -1,5 +1,11 @@
 import { copyAct, copyState } from "./reducer.utils";
-import { ActType, IAppState, DEFAULT_ACT } from "../store";
+import { DEFAULT_ACT } from "../store-settings/store-defaults";
+import { CharacterType, IAppState, StageType } from "../store-settings/store-types";
+
+export type ActType = {
+    characters: Array<CharacterType>,
+    stages: Array<StageType>
+};
 
 export const addActReducer = (state: IAppState): IAppState => {
     const curPathLen = state.paths[state.currentPath].length;

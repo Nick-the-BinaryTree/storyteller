@@ -1,4 +1,4 @@
-import { ActType, IAppState } from "../store";
+import { ActType, IAppState } from "../store-settings/store-types";
 
 export const copyAct = (act: ActType): ActType => JSON.parse(JSON.stringify(act));
 

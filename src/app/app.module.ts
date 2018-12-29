@@ -9,7 +9,9 @@ import { CharacterEditorComponent } from './character-editor/character-editor.co
 import { StageEditorIndexComponent } from './stage-editor-index/stage-editor-index.component';
 import { StageEditorComponent } from './stage-editor/stage-editor.component';
 
-import { rootReducer, IAppState, INITIAL_STATE } from './store';
+import { rootReducer } from './store';
+import { INITIAL_STATE } from './store-settings/store-defaults';
+import { IAppState } from './store-settings/store-types';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/stage', pathMatch: 'full' },

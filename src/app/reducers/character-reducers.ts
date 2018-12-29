@@ -1,5 +1,5 @@
 import { copyState, getAct } from "./reducer.utils";
-import { IAppState, CharacterType } from "../store";
+import { CharacterType, IAppState } from "../store-settings/store-types";
 
 export const addCharacterReducer = (state: IAppState, 
     payload: CharacterType): IAppState => {

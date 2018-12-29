@@ -1,4 +1,3 @@
-import { FourTree } from "src/data-structures/four-tree";
 import { 
     ADD_ACT, ADD_CHARACTER, ADD_PATH, ADD_STAGE,
     DELETE_ACT, DELETE_CHARACTER, DELETE_PATH, DELETE_STAGE,
@@ -9,34 +8,8 @@ import { addActReducer, deleteActReducer, switchActReducer } from "./reducers/ac
 import { addCharacterReducer, deleteCharacterReducer, editCharacterReducer } from "./reducers/character-reducers";
 import { addPathReducer, deletePathReducer, switchPathReducer } from "./reducers/path-reducers";
 import { addStageReducer, deleteStageReducer, editStageReducer } from "./reducers/stage-reducers";
-
-export type ActType = {
-    characters: Array<CharacterType>,
-    stages: Array<StageType>
-};
-export type CharacterType = {
-    name: string,
-    defaultImageURL: string,
-    moodImageURLs: { [key: string]: string } // string key and value
-};
-export type PathType = Array<ActType>;
-export type StageType = {
-    name: string,
-    backgroundImageURL: string,
-    dialog: FourTree
-};
-
-export interface IAppState {
-    // each narrative path is an array of acts
-    currentAct: number,
-    currentPath: string,
-    paths: {
-        [path: string]: PathType
-    }
-}
-
-export const DEFAULT_ACT = { characters: [], stages: [] };
-export const DEFAULT_PATH_NAME = 'default';
+import { IAppState } from "./store-settings/store-types";
+import { INITIAL_STATE } from "./store-settings/store-defaults";
 
 export function rootReducer(state: IAppState, 
     action: {type: string, payload: any}): IAppState {
@@ -68,11 +41,3 @@ export function rootReducer(state: IAppState,
     }
     return INITIAL_STATE;
 }
-
-export const INITIAL_STATE: IAppState = {
-    currentAct: 0,
-    currentPath: 'default',
-    paths: { 
-        default: [DEFAULT_ACT]
-    }
-};
