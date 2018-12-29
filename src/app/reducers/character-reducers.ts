@@ -21,13 +21,13 @@ export const deleteCharacterReducer = (state: IAppState,
     const newState = copyState(state);
     const act = getAct(newState);
 
-    if (act.characters.some(c => c.name === payload)) {
+    if (!act.characters.some(c => c.name === payload)) {
         return state;
     }
-    act.characters.splice[
+    act.characters.splice(
         act.characters.map(c => c.name).indexOf(payload),
         1
-    ];
+    );
     return newState;
 };
 
