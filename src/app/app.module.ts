@@ -1,13 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { RouterModule, Routes } from '@angular/router';
-
 import { AppRoutingModule } from './app-routing.module';
+
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatListModule,
+} from '@angular/material';
+import { BrowserAnimationsModule } from
+  '@angular/platform-browser/animations';
+
 import { AppComponent } from './app.component';
 import { CharacterEditorComponent } from './character-editor/character-editor.component';
-import { StageEditorIndexComponent } from './stage-editor-index/stage-editor-index.component';
 import { StageEditorComponent } from './stage-editor/stage-editor.component';
+import { StageEditorIndexComponent } from './stage-editor-index/stage-editor-index.component';
+import { StageFormComponent } from './stage-form/stage-form.component';
+import { StageSelectComponent } from './stage-select/stage-select.component';
 
 import { rootReducer } from './store';
 import { INITIAL_STATE } from './store-settings/store-defaults';
@@ -26,7 +40,9 @@ const appRoutes: Routes = [
     AppComponent,
     StageEditorIndexComponent,
     StageEditorComponent,
-    CharacterEditorComponent
+    CharacterEditorComponent,
+    StageSelectComponent,
+    StageFormComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -34,8 +50,17 @@ const appRoutes: Routes = [
       { enableTracing: false }
     ),
     AppRoutingModule,
+    BrowserAnimationsModule,
     BrowserModule,
-    NgReduxModule
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    NgReduxModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,29 @@
+<form class="form-container"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit(form)"
+  >
+  <label>Stage Name</label>
+  <mat-form-field>
+    <input formControlName="name"
+      matInput
+      name="name"
+      required>
+  </mat-form-field>
+  <label>Backgrond Image URL</label>
+  <mat-form-field>
+    <input formControlName="bgImgURL"
+      matInput
+      name="bgImgURL"
+      required>
+    <mat-error *ngIf="!form.controls.bgImgURL.valid">
+      Please enter a valid URL to an image.
+    </mat-error>
+  </mat-form-field>
+  <button color="primary"
+    [disabled]="!form.valid"
+    mat-flat-button
+    type="submit"
+    >
+    Submit
+  </button>
+</form>
