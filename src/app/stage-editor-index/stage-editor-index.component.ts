@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { select, NgRedux } from '@angular-redux/store';
 
-import { Observable, Subscription, merge } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { addStageActionCreator, editStageActionCreator } from '../actions';
 import { getAct } from '../reducers/reducer.utils';
@@ -13,8 +13,7 @@ import { IAppState, ActType } from '../store-settings/store-types';
   styleUrls: ['./stage-editor-index.component.css']
 })
 export class StageEditorIndexComponent implements OnInit {
-  @select() currentAct$: Observable<number>;
-  @select() currentPath$: Observable<string>;
+  @select(state => getAct(state)) actData$: Observable<ActType>;
   actData: ActType;
   actSub: Subscription;
 
@@ -24,7 +23,7 @@ export class StageEditorIndexComponent implements OnInit {
   constructor(private ngRedux: NgRedux<IAppState>) { }
 
   ngOnInit() {
-    this.actSub = merge(this.currentAct$, this.currentPath$)
+    this.actSub = this.actData$
       .subscribe(() => {
         this.actData = getAct(this.ngRedux.getState());
       });

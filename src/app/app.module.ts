@@ -18,7 +18,6 @@ import { BrowserAnimationsModule } from
 
 import { AppComponent } from './app.component';
 import { CharacterEditorComponent } from './character-editor/character-editor.component';
-import { StageEditorComponent } from './stage-editor/stage-editor.component';
 import { StageEditorIndexComponent } from './stage-editor-index/stage-editor-index.component';
 import { StageFormComponent } from './stage-form/stage-form.component';
 import { StageSelectComponent } from './stage-select/stage-select.component';
@@ -28,10 +27,8 @@ import { INITIAL_STATE } from './store-settings/store-defaults';
 import { IAppState } from './store-settings/store-types';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/stage', pathMatch: 'full' },
-  { path: 'character/:id', component: CharacterEditorComponent },
-  { path: 'stage', component: StageEditorIndexComponent },
-  { path: 'stage/:id', component: StageEditorComponent },
+  { path: '', redirectTo: '/editor', pathMatch: 'full' },
+  { path: 'editor', component: StageEditorIndexComponent },
   { path: '**', redirectTo: '' }
 ];
 
@@ -39,7 +36,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     StageEditorIndexComponent,
-    StageEditorComponent,
     CharacterEditorComponent,
     StageSelectComponent,
     StageFormComponent

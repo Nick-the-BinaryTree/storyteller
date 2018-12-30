@@ -15,29 +15,29 @@ export function rootReducer(state: IAppState,
     action: {type: string, payload: any}): IAppState {
     switch (action.type) {
         case ADD_ACT:
-            addActReducer(state);
+            return addActReducer(state);
         case ADD_CHARACTER:
-            addCharacterReducer(state, action.payload);
+            return addCharacterReducer(state, action.payload);
         case ADD_PATH:
-            addPathReducer(state, action.payload);
+            return addPathReducer(state, action.payload);
         case ADD_STAGE:
-            addStageReducer(state, action.payload);
+            return addStageReducer(state, action.payload);
         case DELETE_ACT:
-            deleteActReducer(state);
+            return deleteActReducer(state);
         case DELETE_CHARACTER:
-            deleteCharacterReducer(state, action.payload);
+            return deleteCharacterReducer(state, action.payload);
         case DELETE_PATH:
-            deletePathReducer(state, action.payload);
+            return deletePathReducer(state, action.payload);
         case DELETE_STAGE:
-            deleteStageReducer(state, action.payload);
+            return deleteStageReducer(state, action.payload);
         case EDIT_CHARACTER:
-            editCharacterReducer(state, action.payload);
+            return editCharacterReducer(state, action.payload);
         case EDIT_STAGE:
-            editStageReducer(state, action.payload);
+            return editStageReducer(state, action.payload);
         case SWITCH_ACT:
-            switchActReducer(state, action.payload);
+            return switchActReducer(state, action.payload);
         case SWITCH_PATH:
-            switchPathReducer(state, action.payload);
+            return switchPathReducer(state, action.payload);
     }
     return INITIAL_STATE;
 }

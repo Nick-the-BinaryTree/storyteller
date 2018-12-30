@@ -1,3 +1,7 @@
+app-stage-select {
+    margin-right: 16px;
+}
+
 .stage-editor-container {
     display: flex;
     width: 100%;
