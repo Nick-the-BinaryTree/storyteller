@@ -23,7 +23,6 @@ describe('addCharacterReducer', () => {
 
         expect(act.characters.length).toBe(1);
         expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
-        expect(newState.currentCharacter).toBe(0);
     });
 
     it('adds multiple characters to an act on the default path', () => {

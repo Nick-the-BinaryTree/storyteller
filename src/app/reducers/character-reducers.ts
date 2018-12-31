@@ -10,7 +10,7 @@ export const addCharacterReducer = (state: IAppState,
         return state;
     }
     act.characters.push(payload);
-    newState.currentCharacter = act.characters.length-1;
+    newState.currentCharacter = null;
 
     return newState;
 };
@@ -27,6 +27,8 @@ export const deleteCharacterReducer = (state: IAppState,
         act.characters.map(c => c.name).indexOf(payload),
         1
     );
+    newState.currentCharacter = null;
+
     return newState;
 };
 
@@ -41,6 +43,7 @@ export const editCharacterReducer = (state: IAppState,
     act.characters[
         act.characters.map(c => c.name).indexOf(payload.name)
     ] = payload;
+    newState.currentCharacter = null;
     
     return newState;
 }

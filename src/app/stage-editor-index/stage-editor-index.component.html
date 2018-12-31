@@ -1,7 +1,9 @@
 <div class='stage-editor-container'>
-    <app-stage-select [stages]="actData.stages"></app-stage-select>
+    <app-stage-select [currentStageIndex]="currentStage"
+        [stages]="actData.stages">
+    </app-stage-select>
     <app-stage-form *ngIf="currentStage != null"
-        [stageData]="currentStage > -1 ? actData.stages[currentStage] : null"
+        [stageData]="stage$"
         [stageIndex]="currentStage">
     </app-stage-form>
 </div>

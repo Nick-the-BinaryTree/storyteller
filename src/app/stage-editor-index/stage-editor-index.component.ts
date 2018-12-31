@@ -4,7 +4,7 @@ import { select, NgRedux } from '@angular-redux/store';
 import { Observable, Subscription } from 'rxjs';
 
 import { getAct } from '../reducers/reducer.utils';
-import { IAppState, ActType } from '../store-settings/store-types';
+import { IAppState, ActType, StageType } from '../store-settings/store-types';
 
 @Component({
   selector: 'app-stage-editor-index',
@@ -13,6 +13,8 @@ import { IAppState, ActType } from '../store-settings/store-types';
 })
 export class StageEditorIndexComponent implements OnInit {
   @select(state => state) state$: Observable<IAppState>;
+  @select(state => getAct(state).stages[state.currentStage])
+    stage$: Observable<StageType>;
   actData: ActType;
   currentAct: number;
   currentCharacter: number;

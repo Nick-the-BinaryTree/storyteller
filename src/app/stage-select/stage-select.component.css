@@ -1,0 +1,7 @@
+.clickable-menu-item {
+    cursor: pointer;
+}
+
+.editing {
+    font-weight: bold;
+}

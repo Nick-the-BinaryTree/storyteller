@@ -23,7 +23,6 @@ describe('addStageReducer', () => {
 
         expect(act.stages.length).toBe(1);
         expect(act.stages[0].name).toBe(TEST_STAGE.name);
-        expect(newState.currentStage).toBe(0);
     });
 
     it('adds multiple stages to an act on the default path', () => {

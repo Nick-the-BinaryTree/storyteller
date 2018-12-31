@@ -1,8 +1,16 @@
-<mat-card-title>Stages</mat-card-title>
+<mat-card>
+  <mat-card-title>
+    Stages
+  </mat-card-title>
+</mat-card>
 <mat-list role="list">
-  <mat-list-item *ngFor="let stage of stages"
+  <mat-list-item *ngFor="let stage of stages; index as i"
+    [ngClass]="{'editing': currentStageIndex===i}"
     role="listitem">
-    {{ stage.name }}
+      <mat-card class="clickable-menu-item"
+      (click)="selectStage(i)">
+        {{ stage.name }}
+      </mat-card>
   </mat-list-item>
 </mat-list>
 <button color="accent"

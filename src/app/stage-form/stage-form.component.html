@@ -7,15 +7,16 @@
     <input formControlName="name"
       matInput
       name="name"
-      required>
+      required
+      >
   </mat-form-field>
   <label>Backgrond Image URL</label>
   <mat-form-field>
-    <input formControlName="bgImgURL"
+    <input formControlName="backgroundImageURL"
       matInput
-      name="bgImgURL"
+      name="backgroundImageURL"
       required>
-    <mat-error *ngIf="!form.controls.bgImgURL.valid">
+    <mat-error *ngIf="!form.controls.backgroundImageURL.valid">
       Please enter a valid URL to an image.
     </mat-error>
   </mat-form-field>

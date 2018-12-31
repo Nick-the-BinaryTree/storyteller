@@ -10,7 +10,7 @@ export const addStageReducer = (state: IAppState,
         return state;
     }
     act.stages.push(payload);
-    newState.currentStage = act.stages.length-1;
+    newState.currentStage = null;
 
     return newState;
 };
@@ -27,6 +27,8 @@ export const deleteStageReducer = (state: IAppState,
         act.stages.map(s => s.name).indexOf(payload),
         1
     );
+    newState.currentStage = null;
+
     return newState;
 };
 
@@ -41,6 +43,7 @@ export const editStageReducer = (state: IAppState,
     act.stages[
         act.stages.map(s => s.name).indexOf(payload.name)
     ] = payload;
+    newState.currentStage = null;
 
     return newState;
 };
