@@ -4,8 +4,8 @@
   </mat-card-title>
 </mat-card>
 <mat-list role="list">
-  <mat-list-item *ngFor="let stage of stages; index as i"
-    [ngClass]="{'editing': currentStageIndex===i}"
+  <mat-list-item *ngFor="let stage of stages$ | async; index as i"
+    [ngClass]="{'editing': (currentStage$ | async)===i}"
     role="listitem">
       <mat-card class="clickable-menu-item"
       (click)="selectStage(i)">

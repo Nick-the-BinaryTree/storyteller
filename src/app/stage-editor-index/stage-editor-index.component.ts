@@ -13,17 +13,12 @@ import { IAppState, ActType, StageType } from '../store-settings/store-types';
 })
 export class StageEditorIndexComponent implements OnInit {
   @select(state => state) state$: Observable<IAppState>;
-  @select(state => getAct(state).stages[state.currentStage])
-    stage$: Observable<StageType>;
   actData: ActType;
   currentAct: number;
   currentCharacter: number;
   currentPath: string;
   currentStage: number;
   stateSub: Subscription;
-
-  stageBackgroundInput: string;
-  stageNameInput: string;
 
   constructor(private ngRedux: NgRedux<IAppState>) { }
 

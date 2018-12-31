@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgRedux } from '@angular-redux/store';
+import { Component, OnInit } from '@angular/core';
+import { NgRedux, select } from '@angular-redux/store';
 
 import { showEditStageFormActionCreator, showNewStageFormActionCreator } from '../actions';
 import { IAppState, StageType } from '../store-settings/store-types';
+import { getAct } from '../reducers/reducer.utils';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-stage-select',
@@ -10,8 +12,9 @@ import { IAppState, StageType } from '../store-settings/store-types';
   styleUrls: ['./stage-select.component.css']
 })
 export class StageSelectComponent implements OnInit {
-  @Input() currentStageIndex: number;
-  @Input() stages: Array<StageType>
+  @select(state => state.currentStage) currentStage$: Observable<number>;
+  @select(state => getAct(state).stages)
+    stages$: Observable<Array<StageType>>;
 
   constructor(private ngRedux: NgRedux<IAppState>) { }
 

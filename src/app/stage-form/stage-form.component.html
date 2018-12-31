@@ -16,7 +16,7 @@
       matInput
       name="backgroundImageURL"
       required>
-    <mat-error *ngIf="!form.controls.backgroundImageURL.valid">
+    <mat-error *ngIf="!form.get('backgroundImageURL').valid">
       Please enter a valid URL to an image.
     </mat-error>
   </mat-form-field>
