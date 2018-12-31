@@ -3,7 +3,6 @@ import { select, NgRedux } from '@angular-redux/store';
 
 import { Observable, Subscription } from 'rxjs';
 
-import { addStageActionCreator, editStageActionCreator } from '../actions';
 import { getAct } from '../reducers/reducer.utils';
 import { IAppState, ActType } from '../store-settings/store-types';
 
@@ -13,9 +12,13 @@ import { IAppState, ActType } from '../store-settings/store-types';
   styleUrls: ['./stage-editor-index.component.css']
 })
 export class StageEditorIndexComponent implements OnInit {
-  @select(state => getAct(state)) actData$: Observable<ActType>;
+  @select(state => state) state$: Observable<IAppState>;
   actData: ActType;
-  actSub: Subscription;
+  currentAct: number;
+  currentCharacter: number;
+  currentPath: string;
+  currentStage: number;
+  stateSub: Subscription;
 
   stageBackgroundInput: string;
   stageNameInput: string;
@@ -23,30 +26,22 @@ export class StageEditorIndexComponent implements OnInit {
   constructor(private ngRedux: NgRedux<IAppState>) { }
 
   ngOnInit() {
-    this.actSub = this.actData$
+    this.stateSub = this.state$
       .subscribe(() => {
-        this.actData = getAct(this.ngRedux.getState());
+        const state = this.ngRedux.getState();
+
+        this.actData = getAct(state);
+        this.currentAct = state.currentAct;
+        this.currentCharacter = state.currentCharacter;
+        this.currentPath = state.currentPath;
+        this.currentStage = state.currentStage;
       });
   }
 
-  addStage() {
-    this.ngRedux.dispatch(addStageActionCreator({ 
-      name: this.stageNameInput,
-      backgroundImageURL: this.stageBackgroundInput,
-      dialog: null
-    }));
-  }
-
-  editStage() {
-    this.ngRedux.dispatch(editStageActionCreator({ 
-      name: this.stageNameInput,
-      backgroundImageURL: this.stageBackgroundInput,
-      dialog: null
-    }));
-  }
+  
 
   ngOnDestroy() {
-    this.actSub.unsubscribe();
+    this.stateSub.unsubscribe();
   }
 
 }

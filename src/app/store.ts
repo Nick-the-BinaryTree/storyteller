@@ -4,7 +4,7 @@ import {
     EDIT_CHARACTER, EDIT_STAGE,
     SHOW_EDIT_CHARACTER_FORM, SHOW_EDIT_DIALOG, SHOW_EDIT_STAGE_FORM,
     SHOW_NEW_CHARACTER_FORM, SHOW_NEW_STAGE_FORM,
-    SWITCH_ACT, SWITCH_PATH
+    SWITCH_ACT, SWITCH_PATH, showEditCharacterFormActionCreator, showNewCharacterFormActionCreator
     } from "./actions";
 import { addActReducer, deleteActReducer, switchActReducer } from "./reducers/act-reducers";
 import { addCharacterReducer, deleteCharacterReducer, editCharacterReducer } from "./reducers/character-reducers";
@@ -12,6 +12,10 @@ import { addPathReducer, deletePathReducer, switchPathReducer } from "./reducers
 import { addStageReducer, deleteStageReducer, editStageReducer } from "./reducers/stage-reducers";
 import { IAppState } from "./store-settings/store-types";
 import { INITIAL_STATE } from "./store-settings/store-defaults";
+import { 
+    showEditCharacterFormReducer, showEditDialogReducer, showEditStageFormReducer, 
+    showNewCharacterFormReducer, showNewStageFormReducer
+} from "./reducers/interface-reducers";
 
 export function rootReducer(state: IAppState, 
     action: {type: string, payload: any}): IAppState {
@@ -37,15 +41,15 @@ export function rootReducer(state: IAppState,
         case EDIT_STAGE:
             return editStageReducer(state, action.payload);
         case SHOW_EDIT_CHARACTER_FORM:
-            break;
+            return showEditCharacterFormReducer(state, action.payload);
         case SHOW_EDIT_DIALOG:
-            break;
+            return showEditDialogReducer(state);
         case SHOW_EDIT_STAGE_FORM:
-            break;
+            return showEditStageFormReducer(state, action.payload);
         case SHOW_NEW_CHARACTER_FORM:
-            break;
+            return showNewCharacterFormReducer(state);
         case SHOW_NEW_STAGE_FORM:
-            break;
+            return showNewStageFormReducer(state);
         case SWITCH_ACT:
             return switchActReducer(state, action.payload);
         case SWITCH_PATH:

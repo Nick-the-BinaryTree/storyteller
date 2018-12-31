@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { urlValidator } from '../global-utils/validator-utils';
 import { NgRedux } from '@angular-redux/store';
-import { IAppState } from '../store-settings/store-types';
+import { IAppState, StageType } from '../store-settings/store-types';
 import { addStageActionCreator, editStageActionCreator } from '../actions';
 
 @Component({
@@ -12,26 +12,35 @@ import { addStageActionCreator, editStageActionCreator } from '../actions';
   styleUrls: ['./stage-form.component.css']
 })
 export class StageFormComponent implements OnInit {
-  @Input() newStage: boolean;
+  @Input() stageData: StageType;
+  @Input() stageIndex: number;
   form: FormGroup;
 
   constructor(
     private fb: FormBuilder, 
     private ngRedux: NgRedux<IAppState>
   ) {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      bgImgURL: ['', [Validators.required, urlValidator]]
-    });
   }
 
   ngOnInit() {
+    let initName = '';
+    let initBgImgURL = '';
+
+    if (this.stageData != null) {
+      initName = this.stageData.name;
+      initBgImgURL = this.stageData.backgroundImageURL;
+    }
+
+    this.form = this.fb.group({
+      name: [initName, Validators.required],
+      bgImgURL: [initBgImgURL, [Validators.required, urlValidator]]
+    });
   }
 
   onSubmit(form: FormGroup) {
     const { backgroundImageURL, name } = form.getRawValue();
     const dispatchObj = { backgroundImageURL, name, dialog: null };
-    const toDispatch  = this.newStage
+    const toDispatch  = this.stageIndex === -1
     ? addStageActionCreator(dispatchObj)
     : editStageActionCreator(dispatchObj)
 
