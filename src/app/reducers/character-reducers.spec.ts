@@ -1,7 +1,8 @@
 import { addCharacterReducer, deleteCharacterReducer,
     editCharacterReducer } from './character-reducers';
 import { copyState, getAct } from './reducer.utils';
-import { IAppState, INITIAL_STATE } from '../store';
+import { INITIAL_STATE } from '../store-settings/store-defaults';
+import { IAppState } from '../store-settings/store-types';
 
 const TEST_CHARACTER = {
     name: 'Mortimore',
@@ -22,6 +23,7 @@ describe('addCharacterReducer', () => {
 
         expect(act.characters.length).toBe(1);
         expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
+        expect(newState.currentCharacter).toBe(0);
     });
 
     it('adds multiple characters to an act on the default path', () => {

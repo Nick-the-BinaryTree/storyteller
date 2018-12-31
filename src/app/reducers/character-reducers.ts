@@ -10,6 +10,7 @@ export const addCharacterReducer = (state: IAppState,
         return state;
     }
     act.characters.push(payload);
+    newState.currentCharacter = act.characters.length-1;
 
     return newState;
 };

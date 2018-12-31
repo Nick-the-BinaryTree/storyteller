@@ -1,15 +1,16 @@
 import { addActReducer, deleteActReducer, 
     switchActReducer } from './act-reducers';
 import { copyState } from './reducer.utils'
-import { DEFAULT_ACT, IAppState } from '../store';
+import { DEFAULT_ACT, INITIAL_STATE } from '../store-settings/store-defaults';
+import { IAppState } from '../store-settings/store-types';
 
 const TEST_STATE = { 
-    currentAct: 0,
-    currentPath: 'default',
+    ...INITIAL_STATE,
     paths: {
         default: [DEFAULT_ACT],
         alt: []
-}};
+    },
+};
 let state: IAppState;
 
 describe('addActReducer', () => {

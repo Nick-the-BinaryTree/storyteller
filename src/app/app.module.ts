@@ -17,7 +17,6 @@ import { BrowserAnimationsModule } from
   '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { CharacterEditorComponent } from './character-editor/character-editor.component';
 import { StageEditorIndexComponent } from './stage-editor-index/stage-editor-index.component';
 import { StageFormComponent } from './stage-form/stage-form.component';
 import { StageSelectComponent } from './stage-select/stage-select.component';
@@ -36,7 +35,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     StageEditorIndexComponent,
-    CharacterEditorComponent,
     StageSelectComponent,
     StageFormComponent
   ],

@@ -10,6 +10,12 @@ export const DELETE_PATH = 'DELETE_PATH';
 export const DELETE_STAGE = 'DELETE_STAGE';
 export const EDIT_CHARACTER = 'EDIT_CHARACTER';
 export const EDIT_STAGE = 'EDIT_STAGE';
+export const HIDE_EDIT_DIALOG = 'HIDE_EDIT_DIALOG';
+export const SHOW_EDIT_CHARACTER_FORM = 'SHOW_EDIT_CHARACTER_FORM';
+export const SHOW_EDIT_DIALOG = 'SHOW_EDIT_DIALOG';
+export const SHOW_EDIT_STAGE_FORM = 'SHOW_EDIT_STAGE_FORM';
+export const SHOW_NEW_CHARACTER_FORM = 'SHOW_NEW_CHARACTER_FORM';
+export const SHOW_NEW_STAGE_FORM = 'SHOW_ADD_NEW_STAGE_FORM';
 export const SWITCH_ACT = 'SWITCH_ACT';
 export const SWITCH_PATH = 'SWITCH_PATH';
 
@@ -23,5 +29,11 @@ export const deletePathActionCreator = () => ({ type: DELETE_PATH }); // deletes
 export const deleteStageActionCreator = (payload: string) => ({ type: EDIT_STAGE, payload }); // payload = stage name
 export const editCharacterActionCreator = (payload: CharacterType) => ({ type: EDIT_CHARACTER, payload });
 export const editStageActionCreator = (payload: StageType) => ({ type: EDIT_STAGE, payload });
+export const hideEditDialogActionCreator = () => ({ type: HIDE_EDIT_DIALOG });
+export const showEditCharacterFormActionCreator = (payload: number) => ({ type: SHOW_EDIT_CHARACTER_FORM, payload }); // payload = character index
+export const showEditDialogActionCreator = () => ({ type: SHOW_EDIT_DIALOG });
+export const showEditStageFormActionCreator = (payload: number) => ({ type: SHOW_EDIT_STAGE_FORM, payload }); // payload = stage index
+export const showNewCharacterFormActionCreator = () => ({ type: SHOW_NEW_CHARACTER_FORM });
+export const showNewStageFormActionCreator = () => ({ type: SHOW_NEW_STAGE_FORM });
 export const switchActActionCreator = (payload: number) => ({ type: SWITCH_ACT, payload }); // payload = new act number
 export const switchPathActionCreator = (payload: string) => ({ type: SWITCH_PATH, payload }); // payload = new path name

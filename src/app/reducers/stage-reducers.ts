@@ -10,6 +10,7 @@ export const addStageReducer = (state: IAppState,
         return state;
     }
     act.stages.push(payload);
+    newState.currentStage = act.stages.length-1;
 
     return newState;
 };

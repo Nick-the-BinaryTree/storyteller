@@ -1,8 +1,8 @@
 import { copyState, getAct } from './reducer.utils';
 import { addStageReducer, deleteStageReducer,
     editStageReducer } from './stage-reducers';
-import { IAppState, INITIAL_STATE } from '../store';
-import { editCharacter } from '../actions';
+import { INITIAL_STATE } from '../store-settings/store-defaults';
+import { IAppState } from '../store-settings/store-types';
 
 const TEST_STAGE = {
     name: 'Field',
@@ -23,6 +23,7 @@ describe('addStageReducer', () => {
 
         expect(act.stages.length).toBe(1);
         expect(act.stages[0].name).toBe(TEST_STAGE.name);
+        expect(newState.currentStage).toBe(0);
     });
 
     it('adds multiple stages to an act on the default path', () => {
