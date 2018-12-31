@@ -1,6 +1,5 @@
 <form class="form-container"
   [formGroup]="form"
-  (ngSubmit)="onSubmit(form)"
   >
   <label>Stage Name</label>
   <mat-form-field>
@@ -20,10 +19,12 @@
       Please enter a valid URL to an image.
     </mat-error>
   </mat-form-field>
-  <button color="primary"
+  <!-- Can't use submit button b/c material bug https://github.com/angular/material2/issues/4190 -->
+  <button (click)="onSubmit()"
+    color="primary"
     [disabled]="!form.valid"
     mat-flat-button
-    type="submit"
+    type="button"
     >
     Submit
   </button>

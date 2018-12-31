@@ -34,24 +34,24 @@ export class StageFormComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.stage = merge(this.stageData$, this.stageIndex$)
       .subscribe((x: any) => {
-      let nameVal = '';
-      let backgroundImageURLVal = '';
-
-      if (x != null && (x !== -1 || isNaN(x))) {
-        nameVal = x.name;
-        backgroundImageURLVal = x.backgroundImageURL;
+        console.log(x)
+      if (x == null) {
+        return;
+      }
+      if (isNaN(x)) {
+        this.form.get('name').setValue(x.name);
+        this.form.get('backgroundImageURL')
+          .setValue(x.backgroundImageURL);
         this.isNewStage = false;
-      } else {
+      } else if (x === -1) {
+        this.form.reset();
         this.isNewStage = true;
       }
-      this.form.get('name').setValue(nameVal);
-      this.form.get('backgroundImageURL')
-        .setValue(backgroundImageURLVal);
     });
   }
 
-  onSubmit(form: FormGroup) {
-    const { backgroundImageURL, name } = form.getRawValue();
+  onSubmit() {
+    const { backgroundImageURL, name } = this.form.getRawValue();
     const dispatchObj = { backgroundImageURL, name, dialog: null };
     const toDispatch  = this.isNewStage
     ? addStageActionCreator(dispatchObj)
