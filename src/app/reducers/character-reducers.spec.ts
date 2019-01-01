@@ -19,10 +19,9 @@ describe('addCharacterReducer', () => {
 
     it('adds a character to an act on the default path', () => {
         const newState = addCharacterReducer(state, TEST_CHARACTER);
-        const act = getAct(newState);
 
-        expect(act.characters.length).toBe(1);
-        expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
+        expect(newState.characters.length).toBe(1);
+        expect(newState.characters[0].name).toBe(TEST_CHARACTER.name);
     });
 
     it('adds multiple characters to an act on the default path', () => {
@@ -31,11 +30,10 @@ describe('addCharacterReducer', () => {
             // ordering of this spread matters for override
             { ...TEST_CHARACTER, name: TEST_NAME_TWO }
         );
-        const act = getAct(newState);
 
-        expect(act.characters.length).toBe(2);
-        expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
-        expect(act.characters[1].name).toBe(TEST_NAME_TWO);
+        expect(newState.characters.length).toBe(2);
+        expect(newState.characters[0].name).toBe(TEST_CHARACTER.name);
+        expect(newState.characters[1].name).toBe(TEST_NAME_TWO);
     });
 
     it('does not add the same character name twice', () => {
@@ -43,9 +41,8 @@ describe('addCharacterReducer', () => {
             addCharacterReducer(state, TEST_CHARACTER),
             TEST_CHARACTER
         );
-        const act = getAct(newState);
 
-        expect(act.characters.length).toBe(1);
+        expect(newState.characters.length).toBe(1);
     });
 });
 
@@ -56,14 +53,12 @@ describe('deleteCharacterReducer', () => {
 
     it('deletes a character from an act on the default path', () => {
         let newState = addCharacterReducer(state, TEST_CHARACTER);
-        let act = getAct(newState);
 
-        expect(act.characters.length).toBe(1);
+        expect(newState.characters.length).toBe(1);
 
         newState = deleteCharacterReducer(newState, TEST_CHARACTER.name);
-        act = getAct(newState);
 
-        expect(act.characters.length).toBe(0);
+        expect(newState.characters.length).toBe(0);
     });
 
     it('deletes multiple characters from an act on the default path', () => {
@@ -71,17 +66,15 @@ describe('deleteCharacterReducer', () => {
             addCharacterReducer(state, TEST_CHARACTER),
             { ...TEST_CHARACTER, name: TEST_NAME_TWO }
         );
-        let act = getAct(newState);
 
-        expect(act.characters.length).toBe(2);
+        expect(newState.characters.length).toBe(2);
         
         newState = deleteCharacterReducer(
             deleteCharacterReducer(newState, TEST_CHARACTER.name),
             TEST_NAME_TWO
         );
-        act = getAct(newState);
 
-        expect(act.characters.length).toBe(0);
+        expect(newState.characters.length).toBe(0);
     });
 });
 
@@ -92,28 +85,24 @@ describe('editCharacterReducer', () => {
 
     it('does not edit a non-existent character', () => {
         let newState = addCharacterReducer(state, TEST_CHARACTER);
-        let act = getAct(newState);
 
-        expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
+        expect(newState.characters[0].name).toBe(TEST_CHARACTER.name);
 
         newState = editCharacterReducer(newState,
             { ...TEST_CHARACTER, name: TEST_NAME_TWO });
-        act = getAct(newState);
         
-        expect(act.characters[0].name).toBe(TEST_CHARACTER.name);
+        expect(newState.characters[0].name).toBe(TEST_CHARACTER.name);
     });
 
     it('edits an existing character', () => {
         const fakeImgURL = 'https://hi.jpg';
         let newState = addCharacterReducer(state, TEST_CHARACTER);
-        let act = getAct(newState);
 
-        expect(act.characters[0].defaultImageURL).toBe('');
+        expect(newState.characters[0].defaultImageURL).toBe('');
 
         newState = editCharacterReducer(newState,
             { ...TEST_CHARACTER, defaultImageURL: fakeImgURL });
-        act = getAct(newState);
         
-        expect(act.characters[0].defaultImageURL).toBe(fakeImgURL);
+        expect(newState.characters[0].defaultImageURL).toBe(fakeImgURL);
     });
 });

@@ -5,9 +5,10 @@ import { INITIAL_STATE } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
 const TEST_STAGE = {
-    name: 'Field',
     backgroundImageURL: '',
-    dialog: null
+    characters: [],
+    dialog: null,
+    name: 'Field'
 };
 const TEST_NAME_TWO = 'Castle';
 let state: IAppState;

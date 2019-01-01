@@ -2,6 +2,7 @@ import { FourTree } from "src/data-structures/four-tree";
 
 export interface IAppState {
     // each narrative path is an array of acts
+    characters: Array<CharacterType>,
     currentAct: number,
     currentCharacter: number,
     currentPath: string,
@@ -13,7 +14,6 @@ export interface IAppState {
 }
 
 export type ActType = {
-    characters: Array<CharacterType>,
     stages: Array<StageType>
 };
 
@@ -28,5 +28,6 @@ export type PathType = Array<ActType>;
 export type StageType = {
     name: string,
     backgroundImageURL: string,
+    characters: Array<string>, // array of character names
     dialog: FourTree
 };

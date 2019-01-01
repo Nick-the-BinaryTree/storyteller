@@ -4,12 +4,11 @@ import { CharacterType, IAppState } from "../store-settings/store-types";
 export const addCharacterReducer = (state: IAppState, 
     payload: CharacterType): IAppState => {
     const newState = copyState(state);
-    const act = getAct(newState);
 
-    if (act.characters.some(c => c.name === payload.name)) {
+    if (state.characters.some(c => c.name === payload.name)) {
         return state;
     }
-    act.characters.push(payload);
+    newState.characters.push(payload);
     newState.currentCharacter = null;
 
     return newState;
@@ -18,13 +17,12 @@ export const addCharacterReducer = (state: IAppState,
 export const deleteCharacterReducer = (state: IAppState, 
     payload: string): IAppState => {
     const newState = copyState(state);
-    const act = getAct(newState);
 
-    if (!act.characters.some(c => c.name === payload)) {
+    if (!state.characters.some(c => c.name === payload)) {
         return state;
     }
-    act.characters.splice(
-        act.characters.map(c => c.name).indexOf(payload),
+    newState.characters.splice(
+        newState.characters.map(c => c.name).indexOf(payload),
         1
     );
     newState.currentCharacter = null;
@@ -35,13 +33,12 @@ export const deleteCharacterReducer = (state: IAppState,
 export const editCharacterReducer = (state: IAppState, 
     payload: CharacterType): IAppState => {
     const newState = copyState(state);
-    const act = getAct(newState);
 
-    if (!act.characters.some(c => c.name === payload.name)) {
+    if (!state.characters.some(c => c.name === payload.name)) {
         return state;
     }
-    act.characters[
-        act.characters.map(c => c.name).indexOf(payload.name)
+    newState.characters[
+        newState.characters.map(c => c.name).indexOf(payload.name)
     ] = payload;
     newState.currentCharacter = null;
     

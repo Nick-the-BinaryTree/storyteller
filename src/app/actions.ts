@@ -26,7 +26,7 @@ export const addStageActionCreator = (payload: StageType) => ({ type: ADD_STAGE,
 export const deleteActActionCreator = () => ({ type: DELETE_ACT }); // deletes current act from current path
 export const deleteCharacterActionCreator = (payload: string) => ({ type: DELETE_CHARACTER, payload }); // payload = character name
 export const deletePathActionCreator = () => ({ type: DELETE_PATH }); // deletes current path
-export const deleteStageActionCreator = (payload: string) => ({ type: EDIT_STAGE, payload }); // payload = stage name
+export const deleteStageActionCreator = () => ({ type: DELETE_STAGE });
 export const editCharacterActionCreator = (payload: CharacterType) => ({ type: EDIT_CHARACTER, payload });
 export const editStageActionCreator = (payload: StageType) => ({ type: EDIT_STAGE, payload });
 export const hideEditDialogActionCreator = () => ({ type: HIDE_EDIT_DIALOG });

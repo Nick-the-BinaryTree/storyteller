@@ -52,7 +52,7 @@ export class StageFormComponent implements AfterViewInit {
 
   onSubmit() {
     const { backgroundImageURL, name } = this.form.getRawValue();
-    const dispatchObj = { backgroundImageURL, name, dialog: null };
+    const dispatchObj = { backgroundImageURL, characters: [], name, dialog: null };
     const toDispatch  = this.isNewStage
     ? addStageActionCreator(dispatchObj)
     : editStageActionCreator(dispatchObj)
