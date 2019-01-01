@@ -24,6 +24,7 @@ import { StageSelectComponent } from './stage-select/stage-select.component';
 import { rootReducer } from './store';
 import { INITIAL_STATE } from './store-settings/store-defaults';
 import { IAppState } from './store-settings/store-types';
+import { CharacterSelectComponent } from './character-select/character-select.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/editor', pathMatch: 'full' },
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
     AppComponent,
     StageEditorIndexComponent,
     StageSelectComponent,
-    StageFormComponent
+    StageFormComponent,
+    CharacterSelectComponent
   ],
   imports: [
     RouterModule.forRoot(

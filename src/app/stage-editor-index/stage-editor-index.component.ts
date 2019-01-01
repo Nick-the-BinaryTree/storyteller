@@ -18,6 +18,8 @@ export class StageEditorIndexComponent implements OnInit {
   currentCharacter: number;
   currentPath: string;
   currentStage: number;
+  showCharacterSelect: boolean;
+  showDialogEditor: boolean;
   stateSub: Subscription;
 
   constructor(private ngRedux: NgRedux<IAppState>) { }
@@ -32,6 +34,8 @@ export class StageEditorIndexComponent implements OnInit {
         this.currentCharacter = state.currentCharacter;
         this.currentPath = state.currentPath;
         this.currentStage = state.currentStage;
+        this.showCharacterSelect = state.showCharacterSelect;
+        this.showDialogEditor = state.showDialogEditor;
       });
   }
 

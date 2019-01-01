@@ -1,20 +1,21 @@
 import { 
-    ADD_ACT, ADD_CHARACTER, ADD_PATH, ADD_STAGE,
+    ADD_ACT, ADD_CHARACTER, ADD_CHARACTER_TO_STAGE, ADD_PATH, ADD_STAGE,
     DELETE_ACT, DELETE_CHARACTER, DELETE_PATH, DELETE_STAGE,
     EDIT_CHARACTER, EDIT_STAGE,
     SHOW_EDIT_CHARACTER_FORM, SHOW_EDIT_DIALOG, SHOW_EDIT_STAGE_FORM,
     SHOW_NEW_CHARACTER_FORM, SHOW_NEW_STAGE_FORM,
-    SWITCH_ACT, SWITCH_PATH, showEditCharacterFormActionCreator, showNewCharacterFormActionCreator
+    SWITCH_ACT, SWITCH_PATH, SHOW_CHARACTER_SELECT
     } from "./actions";
 import { addActReducer, deleteActReducer, switchActReducer } from "./reducers/act-reducers";
-import { addCharacterReducer, deleteCharacterReducer, editCharacterReducer } from "./reducers/character-reducers";
+import { addCharacterReducer, addCharacterToStageReducer,
+    deleteCharacterReducer, editCharacterReducer } from "./reducers/character-reducers";
 import { addPathReducer, deletePathReducer, switchPathReducer } from "./reducers/path-reducers";
 import { addStageReducer, deleteStageReducer, editStageReducer } from "./reducers/stage-reducers";
 import { IAppState } from "./store-settings/store-types";
 import { INITIAL_STATE } from "./store-settings/store-defaults";
 import { 
-    showEditCharacterFormReducer, showEditDialogReducer, showEditStageFormReducer, 
-    showNewCharacterFormReducer, showNewStageFormReducer
+    showCharacterSelectReducer, showEditCharacterFormReducer, showEditDialogReducer, 
+    showEditStageFormReducer, showNewCharacterFormReducer, showNewStageFormReducer
 } from "./reducers/interface-reducers";
 
 export function rootReducer(state: IAppState, 
@@ -24,6 +25,8 @@ export function rootReducer(state: IAppState,
             return addActReducer(state);
         case ADD_CHARACTER:
             return addCharacterReducer(state, action.payload);
+        case ADD_CHARACTER_TO_STAGE:
+            return addCharacterToStageReducer(state, action.payload);
         case ADD_PATH:
             return addPathReducer(state, action.payload);
         case ADD_STAGE:
@@ -40,6 +43,8 @@ export function rootReducer(state: IAppState,
             return editCharacterReducer(state, action.payload);
         case EDIT_STAGE:
             return editStageReducer(state, action.payload);
+        case SHOW_CHARACTER_SELECT:
+            return showCharacterSelectReducer(state);
         case SHOW_EDIT_CHARACTER_FORM:
             return showEditCharacterFormReducer(state, action.payload);
         case SHOW_EDIT_DIALOG:
