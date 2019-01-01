@@ -21,7 +21,7 @@ export class StageSelectComponent implements OnInit {
   ngOnInit() {
   }
 
-  addStage() {
+  newStage() {
     this.ngRedux.dispatch(showNewStageFormActionCreator());
   }
 

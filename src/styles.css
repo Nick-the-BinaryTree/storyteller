@@ -12,6 +12,14 @@ h1, h2, h3, h4, h5, h6, label, p {
     font-family: Roboto,"Helvetica Neue",sans-serif;
 }
 
+.clickable-menu-item {
+    cursor: pointer;
+}
+
+.editing {
+    font-weight: bold;
+}
+
 .hasErrorText {
     margin-bottom: 16px;
 }
