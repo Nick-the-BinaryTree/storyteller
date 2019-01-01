@@ -20,6 +20,11 @@ h1, h2, h3, h4, h5, h6, label, p {
     font-weight: bold;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .hasErrorText {
     margin-bottom: 16px;
 }

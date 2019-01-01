@@ -1,0 +1,38 @@
+<form class="form-container"
+  [formGroup]="form"
+  >
+  <label>Character Name</label>
+  <mat-form-field>
+    <input formControlName="name"
+      matInput
+      name="name"
+      required
+      >
+  </mat-form-field>
+  <label>Default Image URL</label>
+  <mat-form-field class="hasErrorText">
+    <input formControlName="defaultImageURL"
+      matInput
+      name="defaultImageURL"
+      required>
+    <mat-error *ngIf="!form.get('defaultImageURL').valid">
+      Please enter a valid URL to an image.
+    </mat-error>
+  </mat-form-field>
+  <label>Mood Image URLs</label>
+  <mat-list role="list">
+    <mat-list-item *ngFor="let mood of moods"
+      role="listItem">
+      {{ mood }} ------- X
+    </mat-list-item>
+  </mat-list>
+  <!-- Can't use submit button b/c material bug https://github.com/angular/material2/issues/4190 -->
+  <button (click)="onSubmit()"
+    color="primary"
+    [disabled]="!form.valid"
+    mat-flat-button
+    type="button"
+    >
+    Submit
+  </button>
+</form>

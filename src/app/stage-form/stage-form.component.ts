@@ -59,7 +59,7 @@ export class StageFormComponent implements AfterViewInit {
     const dispatchObj = { backgroundImageURL, characters: [], name, dialog: null };
     const toDispatch  = this.isNewStage
     ? addStageActionCreator(dispatchObj)
-    : editStageActionCreator(dispatchObj)
+    : editStageActionCreator(dispatchObj);
 
     this.ngRedux.dispatch(toDispatch);
   }
