@@ -1,15 +1,9 @@
 import { copyState, getAct } from './reducer.utils';
 import { addStageReducer, deleteStageReducer,
     editStageReducer } from './stage-reducers';
-import { INITIAL_STATE } from '../store-settings/store-defaults';
+import { INITIAL_STATE, TEST_STAGE } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
-export const TEST_STAGE = {
-    backgroundImageURL: '',
-    characters: [],
-    dialog: null,
-    name: 'Field'
-};
 const TEST_NAME_TWO = 'Castle';
 let state: IAppState;
 

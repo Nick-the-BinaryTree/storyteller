@@ -1,6 +1,16 @@
 import { ActType, IAppState } from "./store-types";
-import { TEST_CHARACTER } from "../reducers/character-reducers.spec";
-import { TEST_STAGE } from "../reducers/stage-reducers.spec";
+
+export const TEST_CHARACTER = {
+    name: 'Mortimore',
+    defaultImageURL: '',
+    moodImageURLs: {}
+};
+export const TEST_STAGE = {
+    backgroundImageURL: '',
+    characters: [],
+    dialog: null,
+    name: 'Field'
+};
 
 export const DEFAULT_ACT: ActType = { stages: [ TEST_STAGE ] };
 export const DEFAULT_PATH_NAME: string = 'default';

@@ -2,17 +2,11 @@ import { addCharacterReducer, addCharacterToStageReducer,
     deleteCharacterReducer, editCharacterReducer, 
     } from './character-reducers';
 import { copyState, getAct } from './reducer.utils';
-import { INITIAL_STATE } from '../store-settings/store-defaults';
+import { INITIAL_STATE, TEST_CHARACTER, TEST_STAGE } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
 import { addStageReducer } from './stage-reducers';
-import { TEST_STAGE } from './stage-reducers.spec';
 
-export const TEST_CHARACTER = {
-    name: 'Mortimore',
-    defaultImageURL: '',
-    moodImageURLs: {}
-};
 const TEST_NAME_TWO = 'Gregory';
 let state: IAppState;
 
