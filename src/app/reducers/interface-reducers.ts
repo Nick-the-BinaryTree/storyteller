@@ -5,6 +5,10 @@ export const hideEditDialogReducer = (state: IAppState): IAppState => ({
     ...copyState(state), showDialogEditor: false
 });
 
+export const showCharacterSelectReducer = (state: IAppState): IAppState => ({
+    ...copyState(state), showCharacterSelect: true
+});
+
 export const showEditCharacterFormReducer = (state: IAppState,
     payload: number): IAppState => ({
     ...copyState(state), currentCharacter: payload

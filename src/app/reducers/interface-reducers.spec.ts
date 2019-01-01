@@ -2,9 +2,10 @@ import { copyState } from "./reducer.utils";
 import { INITIAL_STATE } from "../store-settings/store-defaults";
 import { IAppState } from "../store-settings/store-types";
 import { 
-    hideEditDialogReducer,showEditDialogReducer, 
+    hideEditDialogReducer, 
+    showCharacterSelectReducer, showEditDialogReducer,
     showEditCharacterFormReducer, showEditStageFormReducer, 
-    showNewCharacterFormReducer, showNewStageFormReducer
+    showNewCharacterFormReducer, showNewStageFormReducer,
 } from "./interface-reducers";
 
 let state: IAppState;
@@ -22,6 +23,12 @@ describe('Interface Reducers', () => {
         newState = hideEditDialogReducer(state);
         
         expect(newState.showDialogEditor).toBe(false);
+    });
+
+    it('shows the character select', () => {
+        let newState = showCharacterSelectReducer(state);
+
+        expect(newState.showCharacterSelect).toBe(true);
     });
 
     it('shows the edit character form', () => {

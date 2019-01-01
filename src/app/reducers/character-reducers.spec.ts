@@ -1,8 +1,12 @@
-import { addCharacterReducer, deleteCharacterReducer,
-    editCharacterReducer } from './character-reducers';
+import { addCharacterReducer, addCharacterToStageReducer,
+    deleteCharacterReducer, editCharacterReducer, 
+    } from './character-reducers';
 import { copyState, getAct } from './reducer.utils';
 import { INITIAL_STATE } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
+
+import { addStageReducer } from './stage-reducers';
+import { TEST_STAGE } from './stage-reducers.spec';
 
 const TEST_CHARACTER = {
     name: 'Mortimore',
@@ -17,14 +21,14 @@ describe('addCharacterReducer', () => {
         state = copyState(INITIAL_STATE);
     });
 
-    it('adds a character to an act on the default path', () => {
+    it('adds a character', () => {
         const newState = addCharacterReducer(state, TEST_CHARACTER);
 
         expect(newState.characters.length).toBe(1);
         expect(newState.characters[0].name).toBe(TEST_CHARACTER.name);
     });
 
-    it('adds multiple characters to an act on the default path', () => {
+    it('adds multiple characters', () => {
         const newState = addCharacterReducer(
             addCharacterReducer(state, TEST_CHARACTER),
             // ordering of this spread matters for override
@@ -43,6 +47,27 @@ describe('addCharacterReducer', () => {
         );
 
         expect(newState.characters.length).toBe(1);
+    });
+});
+
+describe('addCharacterToStageReducer', () => {
+    beforeEach(() => {
+        state = copyState(INITIAL_STATE);
+    });
+
+    it('adds a character to a stage', () => {
+        let newState = addCharacterReducer(
+            addStageReducer(state, TEST_STAGE),
+            TEST_CHARACTER
+        );
+        // simulate editing stage
+        newState.currentStage = 0;
+        newState = addCharacterToStageReducer(newState, TEST_CHARACTER.name);
+
+        const stage = getAct(newState).stages[newState.currentStage];
+        
+        expect(stage.characters.length).toBe(1);
+        expect(stage.characters[0]).toBe(TEST_CHARACTER.name);
     });
 });
 

@@ -10,7 +10,7 @@
       >
   </mat-form-field>
   <label>Backgrond Image URL</label>
-  <mat-form-field>
+  <mat-form-field class="hasErrorText">
     <input formControlName="backgroundImageURL"
       matInput
       name="backgroundImageURL"
@@ -19,6 +19,19 @@
       Please enter a valid URL to an image.
     </mat-error>
   </mat-form-field>
+  <label>Characters</label>
+  <mat-list role="list">
+    <mat-list-item *ngFor="let char of characters"
+      role="listItem">
+      {{ char }} ------- X
+    </mat-list-item>
+  </mat-list>
+  <button 
+    color="accent"
+    mat-flat-button
+    >
+    Add character
+  </button>
   <!-- Can't use submit button b/c material bug https://github.com/angular/material2/issues/4190 -->
   <button (click)="onSubmit()"
     color="primary"

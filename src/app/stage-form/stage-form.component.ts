@@ -17,6 +17,7 @@ export class StageFormComponent implements AfterViewInit {
   @select(state => getAct(state).stages[state.currentStage])
     stageData$: Observable<StageType>;
   @select(state => state.currentStage) stageIndex$: number;
+  characters = ['Todd', 'Randy'];
   form: FormGroup;
   isNewStage: boolean;
   stage: Subscription;
@@ -34,7 +35,6 @@ export class StageFormComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.stage = merge(this.stageData$, this.stageIndex$)
       .subscribe((x: any) => {
-        console.log(x)
       if (x == null) {
         return;
       }

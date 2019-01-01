@@ -6,10 +6,11 @@ export interface IAppState {
     currentAct: number,
     currentCharacter: number,
     currentPath: string,
-    currentStage: number;
+    currentStage: number,
     paths: {
         [path: string]: PathType
     },
+    showCharacterSelect: boolean,
     showDialogEditor: boolean
 }
 

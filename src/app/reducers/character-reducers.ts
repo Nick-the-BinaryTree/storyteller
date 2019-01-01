@@ -14,6 +14,19 @@ export const addCharacterReducer = (state: IAppState,
     return newState;
 };
 
+export const addCharacterToStageReducer = (state: IAppState, 
+    payload: string): IAppState => {
+    const newState = copyState(state);
+    const stage = getAct(newState).stages[newState.currentStage];
+
+    if (stage == null || stage.characters.some(c => name === payload)) {
+        return state;
+    }
+    stage.characters.push(payload);
+
+    return newState;
+};
+
 export const deleteCharacterReducer = (state: IAppState, 
     payload: string): IAppState => {
     const newState = copyState(state);

@@ -4,7 +4,7 @@ import { addStageReducer, deleteStageReducer,
 import { INITIAL_STATE } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
-const TEST_STAGE = {
+export const TEST_STAGE = {
     backgroundImageURL: '',
     characters: [],
     dialog: null,

@@ -12,5 +12,6 @@ export const INITIAL_STATE: IAppState = {
     paths: { 
         default: [ DEFAULT_ACT ]
     },
+    showCharacterSelect: false,
     showDialogEditor: false
 };
