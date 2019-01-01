@@ -8,7 +8,7 @@ import { IAppState } from '../store-settings/store-types';
 import { addStageReducer } from './stage-reducers';
 import { TEST_STAGE } from './stage-reducers.spec';
 
-const TEST_CHARACTER = {
+export const TEST_CHARACTER = {
     name: 'Mortimore',
     defaultImageURL: '',
     moodImageURLs: {}
