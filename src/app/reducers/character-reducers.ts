@@ -28,6 +28,16 @@ export const addCharacterToStageReducer = (state: IAppState,
     return newState;
 };
 
+export const addCharactersToStageReducer = (state: IAppState,
+    payload: Array<string>): IAppState => {
+        let newState = copyState(state);
+
+        for (const character of payload) {
+            newState = addCharacterToStageReducer(newState, character);
+        }
+        return newState;
+}
+
 export const deleteCharacterReducer = (state: IAppState): IAppState => {
     const newState = copyState(state);
     const currentCharacterName = state.characters[state.currentCharacter].name;

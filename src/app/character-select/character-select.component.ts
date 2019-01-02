@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { select, NgRedux } from '@angular-redux/store';
-import { Observable, Subscription } from 'rxjs';
-import { CharacterType, IAppState } from '../store-settings/store-types';
+import { Observable, Subscription, merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { IAppState, CharacterType } from '../store-settings/store-types';
 import { showNewCharacterFormActionCreator, showEditCharacterFormActionCreator } from '../actions';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { getStageCharacters } from '../global-utils/state-utils';
@@ -12,43 +13,41 @@ import { getStageCharacters } from '../global-utils/state-utils';
   styleUrls: ['./character-select.component.css']
 })
 export class CharacterSelectComponent implements AfterViewInit {
+  @select (state => state.characters)
+    allCharacters$: Observable<Array<CharacterType>>;
   @select(state => getStageCharacters(state))
-    alreadySelected$: Observable<Array<String>>;
-  @select(state => state.characters)
-    characters$: Observable<Array<CharacterType>>;
+    alreadySelected$: Observable<Array<string>>;
   @select(state => state.currentCharacter)
     currentCharacter$: Observable<number>;
-  alreadySelectedSub: Subscription;
-  characters: Array<string>;
-  charactersSub: Subscription;
+  allCharacters: Array<string>;
+  alreadySelected: Array<string> = [];
+  displayCharacters: Array<string>;
   form: FormGroup;
-  selected: Array<string>;
+  stateSub: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private ngRedux: NgRedux<IAppState>
   ) {
-    this.alreadySelectedSub = this.alreadySelected$
-      .subscribe((x: Array<string>) => {
-        if (x == null || this.form == null) {
-          return;
-        }
-        this.selected = x;
+    this.form = this.fb.group({ selected: [] });
+
+    this.stateSub = merge(
+      this.allCharacters$.pipe(
+        tap(x => { this.allCharacters = x==null ? [] : x.map(c => c.name) })
+      ),
+      this.alreadySelected$.pipe(
+        tap(x => { this.alreadySelected = x==null ? [] : x })
+      )
+    )
+      .subscribe((x: any) => {
+        this.displayCharacters = this.allCharacters
+          .filter((c: string) => !this.alreadySelected.includes(c));
+
         this.form = this.fb.group({
-          selected: this.fb.array(x.map(() => this.fb.control(false)))
-        });
-    });
-    this.charactersSub = this.characters$
-      .subscribe((x: Array<CharacterType>) => {
-        if (x == null) {
-          return;
-        }
-        this.characters = x.map(c => c.name);
-        this.form = this.fb.group({
-          selected: this.fb.array(this.characters.map(
-            () => this.fb.control(true)))
-        });
-    });
+          selected: this.fb.array(this.displayCharacters
+            .map(() => this.fb.control(false))
+          )});
+      });
   }
 
   ngAfterViewInit() { }
@@ -60,16 +59,20 @@ export class CharacterSelectComponent implements AfterViewInit {
     }
   }
 
+  globalCharacterIndex(i: number) {
+    return this.allCharacters.indexOf(this.displayCharacters[i]);
+  }
+
   newCharacter() {
     this.ngRedux.dispatch(showNewCharacterFormActionCreator());
   }
 
   selectCharacterForEdit(i: number) {
-    this.ngRedux.dispatch(showEditCharacterFormActionCreator(i));
+    this.ngRedux.dispatch(showEditCharacterFormActionCreator(
+      this.globalCharacterIndex(i)));
   }
 
   ngOnDestroy() {
-    this.alreadySelectedSub.unsubscribe();
-    this.charactersSub.unsubscribe();
+    this.stateSub.unsubscribe();
   }
 }

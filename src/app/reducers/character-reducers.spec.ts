@@ -1,8 +1,8 @@
 import { addCharacterReducer, addCharacterToStageReducer,
-    deleteCharacterReducer, editCharacterReducer, deleteCharacterFromStageReducer, 
+    deleteCharacterReducer, editCharacterReducer, deleteCharacterFromStageReducer, addCharactersToStageReducer, 
     } from './character-reducers';
 import { copyState } from './reducer.utils';
-import { TEST_INITIAL_STATE, TEST_CHARACTER, TEST_STAGE, TEST_DEFAULT_ACT } from '../store-settings/store-defaults';
+import { TEST_INITIAL_STATE, TEST_CHARACTER, TEST_STAGE, TEST_DEFAULT_ACT, TEST_CHARACTER_2 } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
 import { addStageReducer } from './stage-reducers';
@@ -60,6 +60,26 @@ describe('addCharacterToStageReducer', () => {
         
         expect(stage.characters.length).toBe(1);
         expect(stage.characters[0]).toBe(TEST_CHARACTER.name);
+    });
+});
+
+describe('addCharactersToStageReducer', () => {
+    beforeEach(() => {
+        state = copyState(TEST_INITIAL_STATE);
+    });
+
+    it('adds a character to a stage', () => {
+        let newState = copyState(state);
+        // simulate editing stage
+        newState.currentStage = 1;
+        newState = addCharactersToStageReducer(
+            newState,
+            [ TEST_CHARACTER.name, TEST_CHARACTER_2.name ]
+        );
+
+        const stage = getStage(newState);
+        
+        expect(stage.characters.length).toBe(2);
     });
 });
 

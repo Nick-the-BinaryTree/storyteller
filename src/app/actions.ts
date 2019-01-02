@@ -3,6 +3,7 @@ import { CharacterType, StageType } from "./store-settings/store-types";
 export const ADD_ACT = 'ADD_ACT';
 export const ADD_CHARACTER = 'ADD_CHARACTER';
 export const ADD_CHARACTER_TO_STAGE = 'ADD_CHARACTER_TO_STAGE';
+export const ADD_CHARACTERS_TO_STAGE = 'ADD_CHARACTERS_TO_STAGE';
 export const ADD_PATH = 'ADD_PATH';
 export const ADD_STAGE = 'ADD_STAGE';
 
@@ -29,6 +30,7 @@ export const SWITCH_PATH = 'SWITCH_PATH';
 export const addActActionCreator = () => ({ type: ADD_ACT }); // increments current path act by one
 export const addCharacterActionCreator = (payload: CharacterType) => ({ type: ADD_CHARACTER, payload });
 export const addCharacterToStageActionCreator = (payload: string) => ({ type: ADD_CHARACTER_TO_STAGE, payload }); // payload = character name
+export const addCharactersToStageActionCreator = (payload: string) => ({ type: ADD_CHARACTERS_TO_STAGE, payload });
 export const addPathActionCreator = (payload: string) => ({ type: ADD_PATH, payload }); // payload = pathName
 export const addStageActionCreator = (payload: StageType) => ({ type: ADD_STAGE, payload });
 

@@ -1,5 +1,5 @@
 import { 
-    ADD_ACT, ADD_CHARACTER, ADD_CHARACTER_TO_STAGE, ADD_PATH, ADD_STAGE,
+    ADD_ACT, ADD_CHARACTER, ADD_CHARACTER_TO_STAGE, ADD_CHARACTERS_TO_STAGE, ADD_PATH, ADD_STAGE,
     DELETE_ACT, DELETE_CHARACTER, DELETE_CHARACTER_FROM_STAGE, DELETE_PATH, DELETE_STAGE,
     EDIT_CHARACTER, EDIT_STAGE,
     SHOW_EDIT_CHARACTER_FORM, SHOW_EDIT_DIALOG, SHOW_EDIT_STAGE_FORM,
@@ -7,7 +7,8 @@ import {
     SWITCH_ACT, SWITCH_PATH, SHOW_CHARACTER_SELECT
     } from "./actions";
 import { addActReducer, deleteActReducer, switchActReducer } from "./reducers/act-reducers";
-import { addCharacterReducer, addCharacterToStageReducer, deleteCharacterReducer,
+import { addCharacterReducer, addCharacterToStageReducer,
+    addCharactersToStageReducer, deleteCharacterReducer,
     deleteCharacterFromStageReducer, editCharacterReducer } from "./reducers/character-reducers";
 import { addPathReducer, deletePathReducer, switchPathReducer } from "./reducers/path-reducers";
 import { addStageReducer, deleteStageReducer, editStageReducer } from "./reducers/stage-reducers";
@@ -27,6 +28,8 @@ export function rootReducer(state: IAppState,
             return addCharacterReducer(state, action.payload);
         case ADD_CHARACTER_TO_STAGE:
             return addCharacterToStageReducer(state, action.payload);
+        case ADD_CHARACTERS_TO_STAGE:
+            return addCharactersToStageReducer(state, action.payload);
         case ADD_PATH:
             return addPathReducer(state, action.payload);
         case ADD_STAGE:
