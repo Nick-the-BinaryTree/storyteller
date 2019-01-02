@@ -28,9 +28,22 @@
   </mat-form-field>
   <label>Mood Image URLs</label>
   <mat-list role="list">
-    <mat-list-item *ngFor="let mood of moods"
+    <mat-list-item *ngFor="let mood of moods | keyvalue; index as i"
       role="listItem">
-      {{ mood }} ------- X
+      <mat-form-field>
+        <input [formControlName]="'moodKey' + mood.key"
+          matInput
+          [name]="'moodKey' + mood.key"
+          required
+          [value]="mood.key">
+      </mat-form-field>
+      <mat-form-field>
+        <input [formControlName]="'moodValue' + mood.key"
+          matInput
+          [name]="'moodValue' + mood.key"
+          required
+          [value]="mood.value">
+      </mat-form-field>
     </mat-list-item>
   </mat-list>
   <!-- Can't use submit button b/c material bug https://github.com/angular/material2/issues/4190 -->

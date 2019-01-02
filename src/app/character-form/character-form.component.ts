@@ -6,6 +6,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { urlValidator } from '../global-utils/validator-utils';
 import { addCharacterActionCreator, editCharacterActionCreator, deleteCharacterActionCreator } from '../actions';
 
+const moodKeyPrefix = 'moodKey';
+const moodValuePrefix = 'moodValue';
+const REQUIRED_PROPS = {
+  NAME: 'name',
+  DEFAULT_IMAGE_URL: 'defaultImageURL'
+};
+
 @Component({
   selector: 'app-character-form',
   templateUrl: './character-form.component.html',
@@ -18,16 +25,21 @@ export class CharacterFormComponent implements AfterViewInit {
   character: Subscription;
   form: FormGroup;
   isNewCharacter: boolean;
-  moods = [ 'ambivalent: http://tim.com/pensiveTim.jpg', 'cyborgMode: http://tim.com/robotTim.jpg' ];
+  moods = { ambivalent: 'http://tim.com/pensiveTim.jpg', cyborgMode: 'http://tim.com/robotTim.jpg' };
 
   constructor(
     private fb: FormBuilder,
     private ngRedux: NgRedux<IAppState>
   ) {
-    this.form = this.fb.group({
+    const formGroupObj = {
       name: ['', Validators.required],
       defaultImageURL: ['', [Validators.required, urlValidator]]
-    });
+    };
+    for (const mood in this.moods) {
+      formGroupObj[moodKeyPrefix+mood] = [mood, Validators.required]
+      formGroupObj[moodValuePrefix+mood] = [this.moods[mood], Validators.required]
+    }
+    this.form = this.fb.group(formGroupObj);
   }
 
   ngAfterViewInit() {
@@ -37,8 +49,8 @@ export class CharacterFormComponent implements AfterViewInit {
           return;
         }
         if (isNaN(x)) {
-          this.form.get('name').setValue(x.name);
-          this.form.get('defaultImageURL')
+          this.form.get(REQUIRED_PROPS.NAME).setValue(x.name);
+          this.form.get(REQUIRED_PROPS.DEFAULT_IMAGE_URL)
             .setValue(x.defaultImageURL);
           this.isNewCharacter = false;
         } else if (x === -1) {
@@ -52,14 +64,31 @@ export class CharacterFormComponent implements AfterViewInit {
     this.ngRedux.dispatch(deleteCharacterActionCreator());
   }
 
+  parseForm(form: any): CharacterType {
+    const res = { name: '', defaultImageURL: '', moodImageURLs: {} };
+
+    for (const prop in form) {
+      if (prop === REQUIRED_PROPS.DEFAULT_IMAGE_URL || prop === REQUIRED_PROPS.NAME) {
+        res[prop] = form[prop];
+      } else if (prop.slice(0, moodKeyPrefix.length) === moodKeyPrefix) {
+        const oldMood = prop.slice(moodKeyPrefix.length);
+        const newMood = form[moodKeyPrefix+oldMood];
+
+        res.moodImageURLs[newMood] = form[moodValuePrefix+oldMood];
+      }
+    }
+    console.log(form);
+    console.log(res)
+    return res;
+  }
+
   onSubmit() {
-    const { defaultImageURL, name } = this.form.getRawValue();
-    const dispatchObj = { defaultImageURL, moodImageURLs: {}, name };
+    const dispatchObj = this.parseForm(this.form.getRawValue());
     const toDispatch = this.isNewCharacter
       ? addCharacterActionCreator(dispatchObj)
       : editCharacterActionCreator(dispatchObj);
     
-      this.ngRedux.dispatch(toDispatch);
+    this.ngRedux.dispatch(toDispatch);
   }
 
   ngOnDestroy() {

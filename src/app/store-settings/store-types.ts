@@ -21,8 +21,10 @@ export type ActType = {
 export type CharacterType = {
     name: string,
     defaultImageURL: string,
-    moodImageURLs: { [key: string]: string } // string key and value
+    moodImageURLs: MoodType
 };
+
+export type MoodType = { [key: string]: string }; // string key and value
 
 export type PathType = Array<ActType>;
 

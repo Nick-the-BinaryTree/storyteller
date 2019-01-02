@@ -1,7 +1,11 @@
-import { ActType, IAppState, StageType } from "../store-settings/store-types";
+import { ActType, IAppState, MoodType, StageType } from "../store-settings/store-types";
 
 export const getAct = (state: IAppState): ActType => (
     state.paths[state.currentPath][state.currentAct]
+);
+
+export const getMoods = (state: IAppState): MoodType => (
+    state.characters[state.currentCharacter].moodImageURLs
 );
 
 export const  getStage = (state: IAppState): StageType => {
