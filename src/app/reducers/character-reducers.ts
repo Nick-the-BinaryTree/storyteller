@@ -43,6 +43,19 @@ export const deleteCharacterReducer = (state: IAppState,
     return newState;
 };
 
+export const deleteCharacterFromStageReducer = (state: IAppState,
+    payload: number): IAppState => {
+    const newState = copyState(state);
+    const characters = getAct(newState).stages[newState.currentStage].characters;
+
+    if (0 > payload || payload >= characters.length) {
+        return state;
+    }
+    characters.splice(payload, 1);
+
+    return newState;
+}
+
 export const editCharacterReducer = (state: IAppState, 
     payload: CharacterType): IAppState => {
     const newState = copyState(state);

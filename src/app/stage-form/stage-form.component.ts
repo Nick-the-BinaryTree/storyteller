@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { urlValidator } from '../global-utils/validator-utils';
 import { NgRedux, select } from '@angular-redux/store';
 import { IAppState, StageType } from '../store-settings/store-types';
-import { addStageActionCreator, editStageActionCreator, showCharacterSelectActionCreator } from '../actions';
+import { addStageActionCreator, editStageActionCreator, showCharacterSelectActionCreator, deleteCharacterFromStageActionCreator } from '../actions';
 import { Observable, Subscription, merge } from 'rxjs';
 import { getAct } from '../reducers/reducer.utils';
 
@@ -17,7 +17,7 @@ export class StageFormComponent implements AfterViewInit {
   @select(state => getAct(state).stages[state.currentStage])
     stageData$: Observable<StageType>;
   @select(state => state.currentStage) stageIndex$: number;
-  characters = ['Todd', 'Randy'];
+  characters: Array<string>;
   form: FormGroup;
   isNewStage: boolean;
   stage: Subscription;
@@ -39,15 +39,21 @@ export class StageFormComponent implements AfterViewInit {
         return;
       }
       if (isNaN(x)) {
+        this.characters = x.characters;
         this.form.get('name').setValue(x.name);
         this.form.get('backgroundImageURL')
           .setValue(x.backgroundImageURL);
         this.isNewStage = false;
       } else if (x === -1) {
         this.form.reset();
+        this.characters = [];
         this.isNewStage = true;
       }
     });
+  }
+
+  removeCharacterFromStage(i: number) {
+    this.ngRedux.dispatch(deleteCharacterFromStageActionCreator(i));
   }
 
   showCharacterSelect() {

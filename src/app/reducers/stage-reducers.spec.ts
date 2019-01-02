@@ -1,35 +1,44 @@
 import { copyState, getAct } from './reducer.utils';
 import { addStageReducer, deleteStageReducer,
     editStageReducer } from './stage-reducers';
-import { INITIAL_STATE, TEST_STAGE } from '../store-settings/store-defaults';
+import { TEST_INITIAL_STATE, TEST_STAGE, TEST_STAGE_2 } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
-const TEST_NAME_TWO = 'Castle';
 let state: IAppState;
 
 describe('addStageReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('adds a stage to an act on the default path', () => {
-        const newState = addStageReducer(state, TEST_STAGE);
-        const act = getAct(newState);
+        let newState = copyState(state);
+        // simulate new act
+        newState.currentAct = 1;
+        newState.paths.default.push({ stages: [] });
+        newState = addStageReducer(newState, TEST_STAGE);
+
+        let act = getAct(newState);
 
         expect(act.stages.length).toBe(1);
         expect(act.stages[0].name).toBe(TEST_STAGE.name);
     });
 
     it('adds multiple stages to an act on the default path', () => {
-        const newState = addStageReducer(
-            addStageReducer(state, TEST_STAGE),
-            { ...TEST_STAGE, name: TEST_NAME_TWO }
+        let newState = copyState(state);
+        // simulate new act
+        newState.currentAct = 1;
+        newState.paths.default.push({ stages: [] });
+
+        newState = addStageReducer(
+            addStageReducer(newState, TEST_STAGE),
+            TEST_STAGE_2
         );
         const act = getAct(newState);
 
         expect(act.stages.length).toBe(2);
         expect(act.stages[0].name).toBe(TEST_STAGE.name);
-        expect(act.stages[1].name).toBe(TEST_NAME_TWO);
+        expect(act.stages[1].name).toBe(TEST_STAGE_2.name);
     });
 
     it('does not add the same stage twice', () => {
@@ -39,38 +48,35 @@ describe('addStageReducer', () => {
         );
         const act = getAct(newState);
 
-        expect(act.stages.length).toBe(1);
+        expect(act.stages.length).toBe(2);
     });
 });
 
 describe('deleteStageReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('deletes a stage from an act on the default path', () => {
         let newState = addStageReducer(state, TEST_STAGE);
         let act = getAct(newState);
 
-        expect(act.stages.length).toBe(1);
+        expect(act.stages.length).toBe(2);
 
         newState = deleteStageReducer(newState, TEST_STAGE.name);
         act = getAct(newState);
 
-        expect(act.stages.length).toBe(0);
+        expect(act.stages.length).toBe(1);
     });
 
     it('deletes multiple stages from an act on the default path', () => {
-        let newState = addStageReducer(
-            addStageReducer(state, TEST_STAGE),
-            { ...TEST_STAGE, name: TEST_NAME_TWO }
-        );
+        let newState = copyState(state);
         let act = getAct(newState);
 
         expect(act.stages.length).toBe(2);
 
         newState = deleteStageReducer(
-            deleteStageReducer(newState, TEST_NAME_TWO),
+            deleteStageReducer(newState, TEST_STAGE_2.name),
             TEST_STAGE.name
         );
         act = getAct(newState);
@@ -81,7 +87,7 @@ describe('deleteStageReducer', () => {
 
 describe('editStageReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('does not edit a non-existent stage', () => {

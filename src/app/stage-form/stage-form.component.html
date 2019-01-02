@@ -21,9 +21,15 @@
   </mat-form-field>
   <label>Characters</label>
   <mat-list role="list">
-    <mat-list-item *ngFor="let char of characters"
+    <mat-list-item *ngFor="let char of characters; index as i"
       role="listItem">
-      {{ char }} ------- X
+      {{ char }}
+      <button mat-icon-button>
+        <mat-icon aria-label="remove character from stage button"
+          (click)=removeCharacterFromStage(i)>
+          delete
+        </mat-icon>
+      </button>
     </mat-list-item>
   </mat-list>
   <button (click)="showCharacterSelect()"

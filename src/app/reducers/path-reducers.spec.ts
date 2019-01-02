@@ -1,12 +1,12 @@
 import { addPathReducer, deletePathReducer,
     switchPathReducer } from './path-reducers';
 import { copyState } from './reducer.utils';
-import { DEFAULT_ACT, DEFAULT_PATH_NAME, INITIAL_STATE } from '../store-settings/store-defaults';
+import { TEST_DEFAULT_ACT, DEFAULT_PATH_NAME, TEST_INITIAL_STATE } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
 const TEST_PATH_NAME = 'alt';
 const EXPECTED_STATE: IAppState = {
-    ...INITIAL_STATE,
+    ...TEST_INITIAL_STATE,
     currentPath: TEST_PATH_NAME,
 };
 
@@ -14,7 +14,7 @@ let state: IAppState;
 
 describe('addPathReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('adds a new path from initial state', () => {
@@ -23,8 +23,8 @@ describe('addPathReducer', () => {
         expect(newState).toEqual({
             ...EXPECTED_STATE,
             paths: {
-                default: [ DEFAULT_ACT ],
-                [TEST_PATH_NAME]: [ DEFAULT_ACT ]
+                default: [ TEST_DEFAULT_ACT ],
+                [TEST_PATH_NAME]: [ TEST_DEFAULT_ACT ]
             }
         });
     });
@@ -38,7 +38,7 @@ describe('addPathReducer', () => {
         expect(newState).toEqual({
             ...EXPECTED_STATE,
             paths: {
-                default: [ DEFAULT_ACT, null ],
+                default: [ TEST_DEFAULT_ACT, null ],
                 [TEST_PATH_NAME]: [ null ]
             }
         });
@@ -47,7 +47,7 @@ describe('addPathReducer', () => {
 
 describe('deletePathReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('does not delete the default path', () => {
@@ -68,7 +68,7 @@ describe('deletePathReducer', () => {
 
 describe('switchPathReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('does not switch to a non-existent path', () => {
@@ -86,7 +86,7 @@ describe('switchPathReducer', () => {
         expect(newState.currentAct).toBe(0);
         expect(newState.currentPath).toBe(TEST_PATH_NAME);
         expect(newState.paths).toEqual(jasmine.objectContaining({
-            [TEST_PATH_NAME]: [ DEFAULT_ACT ]
+            [TEST_PATH_NAME]: [ TEST_DEFAULT_ACT ]
         }));
     });
 });

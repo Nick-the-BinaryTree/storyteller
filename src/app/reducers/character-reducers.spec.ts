@@ -1,8 +1,8 @@
 import { addCharacterReducer, addCharacterToStageReducer,
-    deleteCharacterReducer, editCharacterReducer, 
+    deleteCharacterReducer, editCharacterReducer, deleteCharacterFromStageReducer, 
     } from './character-reducers';
 import { copyState, getAct } from './reducer.utils';
-import { INITIAL_STATE, TEST_CHARACTER, TEST_STAGE } from '../store-settings/store-defaults';
+import { TEST_INITIAL_STATE, TEST_CHARACTER, TEST_STAGE } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
 import { addStageReducer } from './stage-reducers';
@@ -12,7 +12,7 @@ let state: IAppState;
 
 describe('addCharacterReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('adds a character', () => {
@@ -46,16 +46,13 @@ describe('addCharacterReducer', () => {
 
 describe('addCharacterToStageReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('adds a character to a stage', () => {
-        let newState = addCharacterReducer(
-            addStageReducer(state, TEST_STAGE),
-            TEST_CHARACTER
-        );
+        let newState = copyState(state);
         // simulate editing stage
-        newState.currentStage = 0;
+        newState.currentStage = 1;
         newState = addCharacterToStageReducer(newState, TEST_CHARACTER.name);
 
         const stage = getAct(newState).stages[newState.currentStage];
@@ -65,9 +62,27 @@ describe('addCharacterToStageReducer', () => {
     });
 });
 
+describe('deleteCharacterFromStageReducer', () => {
+    beforeEach(() => {
+        state = copyState(TEST_INITIAL_STATE);
+    });
+
+    it('deletes a character from a stage', () => {
+        let newState = copyState(state);
+        // simulate editing stage
+        newState.currentStage = 0;
+        newState = deleteCharacterFromStageReducer(newState, 1);
+
+        const characters = getAct(newState).stages[newState.currentStage].characters;
+        
+        expect(characters.length).toBe(1);
+        expect(characters[0]).toBe(TEST_CHARACTER.name);
+    });
+});
+
 describe('deleteCharacterReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('deletes a character from an act on the default path', () => {
@@ -99,7 +114,7 @@ describe('deleteCharacterReducer', () => {
 
 describe('editCharacterReducer', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('does not edit a non-existent character', () => {

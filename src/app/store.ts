@@ -1,14 +1,14 @@
 import { 
     ADD_ACT, ADD_CHARACTER, ADD_CHARACTER_TO_STAGE, ADD_PATH, ADD_STAGE,
-    DELETE_ACT, DELETE_CHARACTER, DELETE_PATH, DELETE_STAGE,
+    DELETE_ACT, DELETE_CHARACTER, DELETE_CHARACTER_FROM_STAGE, DELETE_PATH, DELETE_STAGE,
     EDIT_CHARACTER, EDIT_STAGE,
     SHOW_EDIT_CHARACTER_FORM, SHOW_EDIT_DIALOG, SHOW_EDIT_STAGE_FORM,
     SHOW_NEW_CHARACTER_FORM, SHOW_NEW_STAGE_FORM,
     SWITCH_ACT, SWITCH_PATH, SHOW_CHARACTER_SELECT
     } from "./actions";
 import { addActReducer, deleteActReducer, switchActReducer } from "./reducers/act-reducers";
-import { addCharacterReducer, addCharacterToStageReducer,
-    deleteCharacterReducer, editCharacterReducer } from "./reducers/character-reducers";
+import { addCharacterReducer, addCharacterToStageReducer, deleteCharacterReducer,
+    deleteCharacterFromStageReducer, editCharacterReducer } from "./reducers/character-reducers";
 import { addPathReducer, deletePathReducer, switchPathReducer } from "./reducers/path-reducers";
 import { addStageReducer, deleteStageReducer, editStageReducer } from "./reducers/stage-reducers";
 import { IAppState } from "./store-settings/store-types";
@@ -35,6 +35,8 @@ export function rootReducer(state: IAppState,
             return deleteActReducer(state);
         case DELETE_CHARACTER:
             return deleteCharacterReducer(state, action.payload);
+        case DELETE_CHARACTER_FROM_STAGE:
+            return deleteCharacterFromStageReducer(state, action.payload);
         case DELETE_PATH:
             return deletePathReducer(state, action.payload);
         case DELETE_STAGE:

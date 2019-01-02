@@ -1,5 +1,5 @@
 import { copyState } from "./reducer.utils";
-import { INITIAL_STATE } from "../store-settings/store-defaults";
+import { TEST_INITIAL_STATE } from "../store-settings/store-defaults";
 import { IAppState } from "../store-settings/store-types";
 import { 
     hideEditDialogReducer, 
@@ -12,7 +12,7 @@ let state: IAppState;
 
 describe('Interface Reducers', () => {
     beforeEach(() => {
-        state = copyState(INITIAL_STATE);
+        state = copyState(TEST_INITIAL_STATE);
     });
 
     it('hides the dialog editor', () => {

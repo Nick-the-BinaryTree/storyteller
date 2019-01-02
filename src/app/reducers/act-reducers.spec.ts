@@ -1,13 +1,13 @@
 import { addActReducer, deleteActReducer, 
     switchActReducer } from './act-reducers';
 import { copyState } from './reducer.utils'
-import { DEFAULT_ACT, INITIAL_STATE } from '../store-settings/store-defaults';
+import { DEFAULT_ACT, TEST_DEFAULT_ACT, TEST_INITIAL_STATE } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
 const TEST_STATE = { 
-    ...INITIAL_STATE,
+    ...TEST_INITIAL_STATE,
     paths: {
-        default: [DEFAULT_ACT],
+        ...TEST_INITIAL_STATE.paths,
         alt: []
     },
 };
@@ -22,7 +22,7 @@ describe('addActReducer', () => {
         const newState = addActReducer(state);
 
         expect(newState.paths.default.length).toBe(2);
-        expect(newState.paths.default[1]).toEqual(DEFAULT_ACT);
+        expect(newState.paths.default[1]).toEqual(TEST_DEFAULT_ACT);
         expect(newState.paths.default[2]).toBeUndefined();
     });
 
@@ -56,7 +56,7 @@ describe('deleteActReducer', () => {
         let newState = addActReducer(state);
 
         expect(newState.paths.default.length).toBe(2);
-        expect(newState.paths.default[1]).toEqual(DEFAULT_ACT);
+        expect(newState.paths.default[1]).toEqual(TEST_DEFAULT_ACT);
 
         newState = deleteActReducer(newState);
 
@@ -83,13 +83,8 @@ describe('deleteActReducer', () => {
         let newState = copyState(state);
         
         newState.currentPath = 'alt';
-        newState = addActReducer(newState);
+        newState = deleteActReducer(addActReducer(newState));
 
-        expect(newState.paths.alt.length).toBe(1);
-        expect(newState.paths.alt[0]).toEqual(DEFAULT_ACT);
-        expect(newState.paths.alt[1]).toBeUndefined();
-
-        newState = deleteActReducer(newState);
         expect(newState.paths.alt.length).toBe(0);
         expect(newState.paths.alt[1]).toBeUndefined();
     });

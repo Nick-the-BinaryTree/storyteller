@@ -13,6 +13,7 @@ import {
   MatInputModule,
   MatListModule,
 } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from
   '@angular/platform-browser/animations';
 
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
     MatCardModule,
     MatCheckboxModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatListModule,
     NgReduxModule,
