@@ -6,7 +6,7 @@ import { NgRedux, select } from '@angular-redux/store';
 import { IAppState, StageType } from '../store-settings/store-types';
 import { addStageActionCreator, editStageActionCreator, showCharacterSelectActionCreator, deleteCharacterFromStageActionCreator, deleteStageActionCreator } from '../actions';
 import { Observable, Subscription, merge } from 'rxjs';
-import { getAct } from '../reducers/reducer.utils';
+import { getStage } from '../global-utils/state-utils';
 
 @Component({
   selector: 'app-stage-form',
@@ -15,7 +15,7 @@ import { getAct } from '../reducers/reducer.utils';
 })
 export class StageFormComponent implements AfterViewInit {
   @select(state => state.characters.map(c => c.name)) allCharacters$: Observable<Array<string>>;
-  @select(state => getAct(state).stages[state.currentStage])
+  @select(state => getStage(state))
     stageData$: Observable<StageType>;
   @select(state => state.currentStage) stageIndex$: number;
   characters: Array<string> = [];

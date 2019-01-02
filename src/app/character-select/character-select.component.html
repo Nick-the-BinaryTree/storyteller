@@ -1,21 +1,35 @@
-<mat-card>
-    <mat-card-title>
-      Characters
-    </mat-card-title>
-  </mat-card>
-  <mat-list role="list">
-    <mat-list-item *ngFor="let char of characters$ | async; index as i"
-      [ngClass]="{'editing': (currentCharacter$ | async)===i}"
-      role="listitem">
-        <mat-card class="clickable-menu-item"
-        (click)="selectCharacter(i)">
-          {{ char.name }}
-        </mat-card>
-    </mat-list-item>
-  </mat-list>
-  <button (click)="addCharacter()"
-    color="accent"
-    mat-flat-button
-    >
-    Add Character
-  </button>
+<form class="form-container"
+  [formGroup]="form">
+  <mat-card>
+      <mat-card-title>
+        Characters
+      </mat-card-title>
+    </mat-card>
+    <mat-list formArrayName="selected" role="list">
+      <mat-list-item *ngFor="let char of characters; index as i"
+        [ngClass]="{'editing': (currentCharacter$ | async)===i}"
+        role="listitem">
+          <mat-card class="clickable-menu-item">
+            <mat-checkbox [formControlName]="i">
+            {{ char }}
+            </mat-checkbox>
+            <mat-icon aria-label="edit character"
+              (click)="selectCharacterForEdit(i)">
+              edit
+            </mat-icon>
+          </mat-card>
+      </mat-list-item>
+    </mat-list>
+    <button (click)="newCharacter()"
+      color="accent"
+      mat-flat-button
+      >
+      New Character
+    </button>
+    <button (click)="addCharactersToStage()"
+      color="accent"
+      mat-flat-button
+      >
+      Add Selected Characters
+    </button>
+</form>

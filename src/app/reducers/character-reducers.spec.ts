@@ -1,11 +1,12 @@
 import { addCharacterReducer, addCharacterToStageReducer,
     deleteCharacterReducer, editCharacterReducer, deleteCharacterFromStageReducer, 
     } from './character-reducers';
-import { copyState, getAct } from './reducer.utils';
+import { copyState } from './reducer.utils';
 import { TEST_INITIAL_STATE, TEST_CHARACTER, TEST_STAGE, TEST_DEFAULT_ACT } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
 import { addStageReducer } from './stage-reducers';
+import { getStageCharacters, getStage } from '../global-utils/state-utils';
 
 const TEST_NAME_TWO = 'Gregory';
 let state: IAppState;
@@ -55,7 +56,7 @@ describe('addCharacterToStageReducer', () => {
         newState.currentStage = 1;
         newState = addCharacterToStageReducer(newState, TEST_CHARACTER.name);
 
-        const stage = getAct(newState).stages[newState.currentStage];
+        const stage = getStage(newState);
         
         expect(stage.characters.length).toBe(1);
         expect(stage.characters[0]).toBe(TEST_CHARACTER.name);
@@ -133,7 +134,7 @@ describe('deleteCharacterFromStageReducer', () => {
         newState.currentStage = 0;
         newState = deleteCharacterFromStageReducer(newState, 1);
 
-        const characters = getAct(newState).stages[newState.currentStage].characters;
+        const characters = getStageCharacters(newState);
         
         expect(characters.length).toBe(1);
         expect(characters[0]).toBe(TEST_CHARACTER.name);

@@ -1,5 +1,6 @@
-import { getAct, copyState } from "./reducer.utils";
+import { copyState } from "./reducer.utils";
 import { IAppState, StageType } from "../store-settings/store-types";
+import { getAct } from "../global-utils/state-utils";
 
 export const addStageReducer = (state: IAppState, 
     payload: StageType): IAppState => {

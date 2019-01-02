@@ -3,8 +3,8 @@ import { select, NgRedux } from '@angular-redux/store';
 
 import { Observable, Subscription } from 'rxjs';
 
-import { getAct } from '../reducers/reducer.utils';
 import { IAppState, ActType, StageType } from '../store-settings/store-types';
+import { getAct } from '../global-utils/state-utils';
 
 @Component({
   selector: 'app-stage-editor-index',

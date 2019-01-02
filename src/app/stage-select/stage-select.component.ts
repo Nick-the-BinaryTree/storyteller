@@ -3,8 +3,8 @@ import { NgRedux, select } from '@angular-redux/store';
 
 import { showEditStageFormActionCreator, showNewStageFormActionCreator } from '../actions';
 import { IAppState, StageType } from '../store-settings/store-types';
-import { getAct } from '../reducers/reducer.utils';
 import { Observable } from 'rxjs';
+import { getAct } from '../global-utils/state-utils';
 
 @Component({
   selector: 'app-stage-select',

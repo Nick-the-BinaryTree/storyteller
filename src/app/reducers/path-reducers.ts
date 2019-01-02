@@ -1,6 +1,7 @@
-import { getAct, copyState } from "./reducer.utils";
+import { copyState } from "./reducer.utils";
 import { DEFAULT_PATH_NAME } from "../store-settings/store-defaults";
 import { IAppState } from "../store-settings/store-types";
+import { getAct } from "../global-utils/state-utils";
 
 export const addPathReducer = (state: IAppState, 
     payload: string): IAppState => {

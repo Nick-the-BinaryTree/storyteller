@@ -1,5 +1,6 @@
-import { copyState, getAct } from "./reducer.utils";
+import { copyState } from "./reducer.utils";
 import { CharacterType, IAppState } from "../store-settings/store-types";
+import { getStage, getStageCharacters } from "../global-utils/state-utils";
 
 export const addCharacterReducer = (state: IAppState, 
     payload: CharacterType): IAppState => {
@@ -17,7 +18,7 @@ export const addCharacterReducer = (state: IAppState,
 export const addCharacterToStageReducer = (state: IAppState, 
     payload: string): IAppState => {
     const newState = copyState(state);
-    const stage = getAct(newState).stages[newState.currentStage];
+    const stage = getStage(newState);
 
     if (stage == null || stage.characters.some(c => name === payload)) {
         return state;
@@ -48,7 +49,7 @@ export const deleteCharacterReducer = (state: IAppState): IAppState => {
 export const deleteCharacterFromStageReducer = (state: IAppState,
     payload: number): IAppState => {
     const newState = copyState(state);
-    const characters = getAct(newState).stages[newState.currentStage].characters;
+    const characters = getStageCharacters(newState);
 
     if (0 > payload || payload >= characters.length) {
         return state;

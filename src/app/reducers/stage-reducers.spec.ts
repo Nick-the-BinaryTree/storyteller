@@ -1,8 +1,9 @@
-import { copyState, getAct } from './reducer.utils';
+import { copyState } from './reducer.utils';
 import { addStageReducer, deleteStageReducer,
     editStageReducer } from './stage-reducers';
 import { TEST_INITIAL_STATE, TEST_STAGE, TEST_STAGE_2 } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
+import { getAct } from '../global-utils/state-utils';
 
 let state: IAppState;
 
