@@ -3,7 +3,7 @@ import { select, NgRedux } from '@angular-redux/store';
 import { Observable, Subscription, merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IAppState, CharacterType } from '../store-settings/store-types';
-import { showNewCharacterFormActionCreator, showEditCharacterFormActionCreator } from '../actions';
+import { showNewCharacterFormActionCreator, showEditCharacterFormActionCreator, addCharactersToStageActionCreator } from '../actions';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { getStageCharacters } from '../global-utils/state-utils';
 
@@ -54,7 +54,13 @@ export class CharacterSelectComponent implements AfterViewInit {
 
   addCharactersToStage() {
     if (this.form != null) {
-      alert(JSON.stringify(this.form.getRawValue()));
+      const names = this.form.getRawValue().selected
+        .map((x: boolean, i: number) => x
+          ? this.displayCharacters[i]
+          : null)
+        .filter((x: any) => x != null);
+
+      this.ngRedux.dispatch(addCharactersToStageActionCreator(names))
 
     }
   }
