@@ -63,7 +63,8 @@ describe('deleteStageReducer', () => {
 
         expect(act.stages.length).toBe(2);
 
-        newState = deleteStageReducer(newState, TEST_STAGE.name);
+        newState.currentStage = 0;
+        newState = deleteStageReducer(newState);
         act = getAct(newState);
 
         expect(act.stages.length).toBe(1);
@@ -75,10 +76,11 @@ describe('deleteStageReducer', () => {
 
         expect(act.stages.length).toBe(2);
 
-        newState = deleteStageReducer(
-            deleteStageReducer(newState, TEST_STAGE_2.name),
-            TEST_STAGE.name
-        );
+        for (let i=act.stages.length-1; i>=0; i--) {
+            newState.currentStage = i;
+            newState = deleteStageReducer(newState);
+        }
+
         act = getAct(newState);
 
         expect(act.stages.length).toBe(0);

@@ -33,7 +33,7 @@ export const addPathActionCreator = (payload: string) => ({ type: ADD_PATH, payl
 export const addStageActionCreator = (payload: StageType) => ({ type: ADD_STAGE, payload });
 
 export const deleteActActionCreator = () => ({ type: DELETE_ACT }); // deletes current act from current path
-export const deleteCharacterActionCreator = (payload: string) => ({ type: DELETE_CHARACTER, payload }); // payload = character name
+export const deleteCharacterActionCreator = () => ({ type: DELETE_CHARACTER });
 export const deleteCharacterFromStageActionCreator = (payload: number) => ({ type: DELETE_CHARACTER_FROM_STAGE, payload }); // payload = character index
 export const deletePathActionCreator = () => ({ type: DELETE_PATH }); // deletes current path
 export const deleteStageActionCreator = () => ({ type: DELETE_STAGE });

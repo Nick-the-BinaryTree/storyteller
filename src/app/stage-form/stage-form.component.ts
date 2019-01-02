@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { urlValidator } from '../global-utils/validator-utils';
 import { NgRedux, select } from '@angular-redux/store';
 import { IAppState, StageType } from '../store-settings/store-types';
-import { addStageActionCreator, editStageActionCreator, showCharacterSelectActionCreator, deleteCharacterFromStageActionCreator } from '../actions';
+import { addStageActionCreator, editStageActionCreator, showCharacterSelectActionCreator, deleteCharacterFromStageActionCreator, deleteStageActionCreator } from '../actions';
 import { Observable, Subscription, merge } from 'rxjs';
 import { getAct } from '../reducers/reducer.utils';
 
@@ -50,6 +50,10 @@ export class StageFormComponent implements AfterViewInit {
         this.isNewStage = true;
       }
     });
+  }
+
+  deleteThisStage() {
+    this.ngRedux.dispatch(deleteStageActionCreator());
   }
 
   removeCharacterFromStage(i: number) {

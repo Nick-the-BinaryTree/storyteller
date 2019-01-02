@@ -27,17 +27,10 @@ export const addCharacterToStageReducer = (state: IAppState,
     return newState;
 };
 
-export const deleteCharacterReducer = (state: IAppState, 
-    payload: string): IAppState => {
+export const deleteCharacterReducer = (state: IAppState): IAppState => {
     const newState = copyState(state);
 
-    if (!state.characters.some(c => c.name === payload)) {
-        return state;
-    }
-    newState.characters.splice(
-        newState.characters.map(c => c.name).indexOf(payload),
-        1
-    );
+    newState.characters.splice(state.currentCharacter, 1);
     newState.currentCharacter = null;
 
     return newState;

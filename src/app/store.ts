@@ -34,13 +34,13 @@ export function rootReducer(state: IAppState,
         case DELETE_ACT:
             return deleteActReducer(state);
         case DELETE_CHARACTER:
-            return deleteCharacterReducer(state, action.payload);
+            return deleteCharacterReducer(state);
         case DELETE_CHARACTER_FROM_STAGE:
             return deleteCharacterFromStageReducer(state, action.payload);
         case DELETE_PATH:
             return deletePathReducer(state, action.payload);
         case DELETE_STAGE:
-            return deleteStageReducer(state, action.payload);
+            return deleteStageReducer(state);
         case EDIT_CHARACTER:
             return editCharacterReducer(state, action.payload);
         case EDIT_STAGE:

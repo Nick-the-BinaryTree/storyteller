@@ -62,6 +62,39 @@ describe('addCharacterToStageReducer', () => {
     });
 });
 
+describe('deleteCharacterReducer', () => {
+    beforeEach(() => {
+        state = copyState(TEST_INITIAL_STATE);
+    });
+
+    it('deletes a character from an act on the default path', () => {
+        let newState = addCharacterReducer(state, TEST_CHARACTER);
+
+        expect(newState.characters.length).toBe(1);
+
+        newState.currentCharacter = 0;
+        newState = deleteCharacterReducer(newState);
+
+        expect(newState.characters.length).toBe(0);
+    });
+
+    it('deletes multiple characters from an act on the default path', () => {
+        let newState = addCharacterReducer(
+            addCharacterReducer(state, TEST_CHARACTER),
+            { ...TEST_CHARACTER, name: TEST_NAME_TWO }
+        );
+
+        expect(newState.characters.length).toBe(2);
+        
+        for (let i=newState.characters.length-1; i>=0; i--) {
+            newState.currentCharacter = i;
+            newState = deleteCharacterReducer(newState);
+        }
+
+        expect(newState.characters.length).toBe(0);
+    });
+});
+
 describe('deleteCharacterFromStageReducer', () => {
     beforeEach(() => {
         state = copyState(TEST_INITIAL_STATE);
@@ -77,38 +110,6 @@ describe('deleteCharacterFromStageReducer', () => {
         
         expect(characters.length).toBe(1);
         expect(characters[0]).toBe(TEST_CHARACTER.name);
-    });
-});
-
-describe('deleteCharacterReducer', () => {
-    beforeEach(() => {
-        state = copyState(TEST_INITIAL_STATE);
-    });
-
-    it('deletes a character from an act on the default path', () => {
-        let newState = addCharacterReducer(state, TEST_CHARACTER);
-
-        expect(newState.characters.length).toBe(1);
-
-        newState = deleteCharacterReducer(newState, TEST_CHARACTER.name);
-
-        expect(newState.characters.length).toBe(0);
-    });
-
-    it('deletes multiple characters from an act on the default path', () => {
-        let newState = addCharacterReducer(
-            addCharacterReducer(state, TEST_CHARACTER),
-            { ...TEST_CHARACTER, name: TEST_NAME_TWO }
-        );
-
-        expect(newState.characters.length).toBe(2);
-        
-        newState = deleteCharacterReducer(
-            deleteCharacterReducer(newState, TEST_CHARACTER.name),
-            TEST_NAME_TWO
-        );
-
-        expect(newState.characters.length).toBe(0);
     });
 });
 
