@@ -4,7 +4,7 @@ import { CharacterType, IAppState } from '../store-settings/store-types';
 import { merge, Observable, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { urlValidator } from '../global-utils/validator-utils';
-import { addCharacterActionCreator, editCharacterActionCreator } from '../actions';
+import { addCharacterActionCreator, editCharacterActionCreator, deleteCharacterActionCreator } from '../actions';
 
 @Component({
   selector: 'app-character-form',
@@ -46,6 +46,10 @@ export class CharacterFormComponent implements AfterViewInit {
           this.isNewCharacter = true;
         }
       });
+  }
+
+  deleteThisCharacter() {
+    this.ngRedux.dispatch(deleteCharacterActionCreator());
   }
 
   onSubmit() {

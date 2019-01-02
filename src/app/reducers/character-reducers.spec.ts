@@ -2,7 +2,7 @@ import { addCharacterReducer, addCharacterToStageReducer,
     deleteCharacterReducer, editCharacterReducer, deleteCharacterFromStageReducer, 
     } from './character-reducers';
 import { copyState, getAct } from './reducer.utils';
-import { TEST_INITIAL_STATE, TEST_CHARACTER, TEST_STAGE } from '../store-settings/store-defaults';
+import { TEST_INITIAL_STATE, TEST_CHARACTER, TEST_STAGE, TEST_DEFAULT_ACT } from '../store-settings/store-defaults';
 import { IAppState } from '../store-settings/store-types';
 
 import { addStageReducer } from './stage-reducers';
@@ -92,6 +92,33 @@ describe('deleteCharacterReducer', () => {
         }
 
         expect(newState.characters.length).toBe(0);
+    });
+
+    it('deletes a character from all acts including the character', () => {
+        let newState = addCharacterReducer(state, TEST_CHARACTER);
+
+        // add to two stages in same act
+        newState.currentStage = 1;
+        newState = addCharacterToStageReducer(newState, TEST_CHARACTER.name);
+        
+        // add to next act
+        newState.currentAct = 1;
+        newState.currentStage = 0;
+        newState.paths.default.push(TEST_DEFAULT_ACT);
+
+        // add to different path
+        newState.paths['alt'] = [ TEST_DEFAULT_ACT ];
+
+        // prime reducer for removal
+        newState.currentCharacter = 0;
+
+        newState = deleteCharacterReducer(newState);
+
+        expect(newState.characters.length).toBe(0);
+        expect(newState.paths.alt[0].stages[0].characters.length).toBe(1);
+        expect(newState.paths.default[0].stages[0].characters.length).toBe(1);
+        expect(newState.paths.default[0].stages[1].characters.length).toBe(0);
+        expect(newState.paths.default[1].stages[0].characters.length).toBe(1);
     });
 });
 

@@ -29,9 +29,18 @@ export const addCharacterToStageReducer = (state: IAppState,
 
 export const deleteCharacterReducer = (state: IAppState): IAppState => {
     const newState = copyState(state);
+    const currentCharacterName = state.characters[state.currentCharacter].name;
 
     newState.characters.splice(state.currentCharacter, 1);
     newState.currentCharacter = null;
+
+    for (const path in newState.paths) {
+        for (const act of newState.paths[path]) {
+            for (let stage of act.stages) {
+                stage.characters = stage.characters.filter(c => c !== currentCharacterName);
+            }
+        }
+    }
 
     return newState;
 };

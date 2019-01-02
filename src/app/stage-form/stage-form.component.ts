@@ -14,10 +14,11 @@ import { getAct } from '../reducers/reducer.utils';
   styleUrls: ['./stage-form.component.css']
 })
 export class StageFormComponent implements AfterViewInit {
+  @select(state => state.characters.map(c => c.name)) allCharacters$: Observable<Array<string>>;
   @select(state => getAct(state).stages[state.currentStage])
     stageData$: Observable<StageType>;
   @select(state => state.currentStage) stageIndex$: number;
-  characters: Array<string>;
+  characters: Array<string> = [];
   form: FormGroup;
   isNewStage: boolean;
   stage: Subscription;
@@ -33,12 +34,14 @@ export class StageFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.stage = merge(this.stageData$, this.stageIndex$)
+    this.stage = merge(this.allCharacters$, this.stageData$, this.stageIndex$)
       .subscribe((x: any) => {
       if (x == null) {
         return;
       }
-      if (isNaN(x)) {
+      if (Array.isArray(x)) {
+        this.characters = this.characters.filter(c => x.includes(c));
+      } else if (isNaN(x)) {
         this.characters = x.characters;
         this.form.get('name').setValue(x.name);
         this.form.get('backgroundImageURL')
