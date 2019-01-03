@@ -1,10 +1,5 @@
-<button color="warn"
-  mat-mini-fab>
-  <mat-icon aria-label="delete stage from act"
-    (click)="deleteThisStage()">
-    delete
-  </mat-icon>
-</button>
+<app-window-close-button (clickedClose)="close()">
+</app-window-close-button>
 <form class="form-container"
   [formGroup]="form"
   >
@@ -55,3 +50,10 @@
     Submit
   </button>
 </form>
+<button color="warn"
+  mat-mini-fab>
+  <mat-icon aria-label="delete stage from act"
+    (click)="deleteThisStage()">
+    delete
+  </mat-icon>
+</button>

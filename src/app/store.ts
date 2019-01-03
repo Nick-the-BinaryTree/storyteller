@@ -2,9 +2,10 @@ import {
     ADD_ACT, ADD_CHARACTER, ADD_CHARACTER_TO_STAGE, ADD_CHARACTERS_TO_STAGE, ADD_PATH, ADD_STAGE,
     DELETE_ACT, DELETE_CHARACTER, DELETE_CHARACTER_FROM_STAGE, DELETE_PATH, DELETE_STAGE,
     EDIT_CHARACTER, EDIT_STAGE,
-    SHOW_EDIT_CHARACTER_FORM, SHOW_EDIT_DIALOG, SHOW_EDIT_STAGE_FORM,
-    SHOW_NEW_CHARACTER_FORM, SHOW_NEW_STAGE_FORM,
-    SWITCH_ACT, SWITCH_PATH, SHOW_CHARACTER_SELECT
+    HIDE_CHARACTER_SELECT, HIDE_EDIT_CHARACTER_FORM, HIDE_EDIT_DIALOG, HIDE_EDIT_STAGE_FORM,
+    SHOW_CHARACTER_SELECT, SHOW_EDIT_CHARACTER_FORM, SHOW_EDIT_DIALOG,
+    SHOW_EDIT_STAGE_FORM, SHOW_NEW_CHARACTER_FORM, SHOW_NEW_STAGE_FORM,
+    SWITCH_ACT, SWITCH_PATH
     } from "./actions";
 import { addActReducer, deleteActReducer, switchActReducer } from "./reducers/act-reducers";
 import { addCharacterReducer, addCharacterToStageReducer,
@@ -16,7 +17,7 @@ import { IAppState } from "./store-settings/store-types";
 import { INITIAL_STATE } from "./store-settings/store-defaults";
 import { 
     showCharacterSelectReducer, showEditCharacterFormReducer, showEditDialogReducer, 
-    showEditStageFormReducer, showNewCharacterFormReducer, showNewStageFormReducer
+    showEditStageFormReducer, showNewCharacterFormReducer, showNewStageFormReducer, hideCharacterSelectReducer, hideEditCharacterFormReducer, hideEditDialogReducer, hideEditStageFormReducer
 } from "./reducers/interface-reducers";
 
 export function rootReducer(state: IAppState, 
@@ -48,6 +49,14 @@ export function rootReducer(state: IAppState,
             return editCharacterReducer(state, action.payload);
         case EDIT_STAGE:
             return editStageReducer(state, action.payload);
+        case HIDE_CHARACTER_SELECT:
+            return hideCharacterSelectReducer(state);
+        case HIDE_EDIT_CHARACTER_FORM:
+            return hideEditCharacterFormReducer(state);
+        case HIDE_EDIT_DIALOG:
+            return hideEditDialogReducer(state);
+        case HIDE_EDIT_STAGE_FORM:
+            return hideEditStageFormReducer(state);
         case SHOW_CHARACTER_SELECT:
             return showCharacterSelectReducer(state);
         case SHOW_EDIT_CHARACTER_FORM:

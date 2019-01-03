@@ -4,10 +4,8 @@ import { CharacterType, IAppState } from '../store-settings/store-types';
 import { merge, Observable, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { urlValidator } from '../global-utils/validator-utils';
-import { addCharacterActionCreator, editCharacterActionCreator, deleteCharacterActionCreator } from '../actions';
+import { addCharacterActionCreator, editCharacterActionCreator, deleteCharacterActionCreator, hideEditCharacterFormActionCreator } from '../actions';
 
-const moodKeyPrefix = 'moodKey';
-const moodValuePrefix = 'moodValue';
 const REQUIRED_PROPS = {
   NAME: 'name',
   DEFAULT_IMAGE_URL: 'defaultImageURL'
@@ -25,6 +23,8 @@ export class CharacterFormComponent implements AfterViewInit {
   character: Subscription;
   form: FormGroup;
   isNewCharacter: boolean;
+  moodKeyPrefix = 'moodKey';
+  moodValuePrefix = 'moodValue';
   moods = { ambivalent: 'http://tim.com/pensiveTim.jpg', cyborgMode: 'http://tim.com/robotTim.jpg' };
 
   constructor(
@@ -36,8 +36,8 @@ export class CharacterFormComponent implements AfterViewInit {
       defaultImageURL: ['', [Validators.required, urlValidator]]
     };
     for (const mood in this.moods) {
-      formGroupObj[moodKeyPrefix+mood] = [mood, Validators.required]
-      formGroupObj[moodValuePrefix+mood] = [this.moods[mood], Validators.required]
+      formGroupObj[this.moodKeyPrefix+mood] = [mood, Validators.required]
+      formGroupObj[this.moodValuePrefix+mood] = [this.moods[mood], Validators.required]
     }
     this.form = this.fb.group(formGroupObj);
   }
@@ -60,8 +60,13 @@ export class CharacterFormComponent implements AfterViewInit {
       });
   }
 
+  close() {
+    this.ngRedux.dispatch(hideEditCharacterFormActionCreator());
+  }
+
   deleteThisCharacter() {
     this.ngRedux.dispatch(deleteCharacterActionCreator());
+    this.close();
   }
 
   parseForm(form: any): CharacterType {
@@ -70,15 +75,13 @@ export class CharacterFormComponent implements AfterViewInit {
     for (const prop in form) {
       if (prop === REQUIRED_PROPS.DEFAULT_IMAGE_URL || prop === REQUIRED_PROPS.NAME) {
         res[prop] = form[prop];
-      } else if (prop.slice(0, moodKeyPrefix.length) === moodKeyPrefix) {
-        const oldMood = prop.slice(moodKeyPrefix.length);
-        const newMood = form[moodKeyPrefix+oldMood];
+      } else if (prop.slice(0, this.moodKeyPrefix.length) === this.moodKeyPrefix) {
+        const oldMood = prop.slice(this.moodKeyPrefix.length);
+        const newMood = form[this.moodKeyPrefix+oldMood];
 
-        res.moodImageURLs[newMood] = form[moodValuePrefix+oldMood];
+        res.moodImageURLs[newMood] = form[this.moodValuePrefix+oldMood];
       }
     }
-    console.log(form);
-    console.log(res)
     return res;
   }
 
@@ -89,6 +92,7 @@ export class CharacterFormComponent implements AfterViewInit {
       : editCharacterActionCreator(dispatchObj);
     
     this.ngRedux.dispatch(toDispatch);
+    this.close();
   }
 
   ngOnDestroy() {

@@ -16,7 +16,11 @@ export const DELETE_STAGE = 'DELETE_STAGE';
 export const EDIT_CHARACTER = 'EDIT_CHARACTER';
 export const EDIT_STAGE = 'EDIT_STAGE';
 
+export const HIDE_CHARACTER_SELECT = 'HIDE_CHARACTER_SELECT';
+export const HIDE_EDIT_CHARACTER_FORM = 'HIDE_EDIT_CHARACTER_FORM';
 export const HIDE_EDIT_DIALOG = 'HIDE_EDIT_DIALOG';
+export const HIDE_EDIT_STAGE_FORM = 'HIDE_EDIT_STAGE_FORM';
+
 export const SHOW_CHARACTER_SELECT = 'SHOW_CHARACTER_SELECT';
 export const SHOW_EDIT_CHARACTER_FORM = 'SHOW_EDIT_CHARACTER_FORM';
 export const SHOW_EDIT_DIALOG = 'SHOW_EDIT_DIALOG';
@@ -43,7 +47,11 @@ export const deleteStageActionCreator = () => ({ type: DELETE_STAGE });
 export const editCharacterActionCreator = (payload: CharacterType) => ({ type: EDIT_CHARACTER, payload });
 export const editStageActionCreator = (payload: StageType) => ({ type: EDIT_STAGE, payload });
 
+export const hideCharacterSelectActionCreator = () => ({ type: HIDE_CHARACTER_SELECT });
+export const hideEditCharacterFormActionCreator = () => ({ type: HIDE_EDIT_CHARACTER_FORM });
 export const hideEditDialogActionCreator = () => ({ type: HIDE_EDIT_DIALOG });
+export const hideEditStageFormActionCreator = () => ({ type: HIDE_EDIT_STAGE_FORM });
+
 export const showCharacterSelectActionCreator = () => ({ type: SHOW_CHARACTER_SELECT });
 export const showEditCharacterFormActionCreator = (payload: number) => ({ type: SHOW_EDIT_CHARACTER_FORM, payload }); // payload = character index
 export const showEditDialogActionCreator = () => ({ type: SHOW_EDIT_DIALOG });

@@ -5,7 +5,7 @@ import {
     hideEditDialogReducer, 
     showCharacterSelectReducer, showEditDialogReducer,
     showEditCharacterFormReducer, showEditStageFormReducer, 
-    showNewCharacterFormReducer, showNewStageFormReducer,
+    showNewCharacterFormReducer, showNewStageFormReducer, hideCharacterSelectReducer, hideEditCharacterFormReducer, hideEditStageFormReducer,
 } from "./interface-reducers";
 
 let state: IAppState;
@@ -13,6 +13,30 @@ let state: IAppState;
 describe('Interface Reducers', () => {
     beforeEach(() => {
         state = copyState(TEST_INITIAL_STATE);
+    });
+
+    it('hides the character select and character editor when character select is closed', () => {
+        let newState = showCharacterSelectReducer(
+            showEditCharacterFormReducer(state, 1)
+        );
+
+        expect(newState.showCharacterSelect).toBe(true);
+        expect(newState.currentCharacter).toBe(1);
+
+        newState = hideCharacterSelectReducer(state);
+
+        expect(newState.showCharacterSelect).toBe(false);
+        expect(newState.currentCharacter).toBeNull();
+    });
+
+    it('hides the character editor', () => {
+        let newState = showEditCharacterFormReducer(state, 1);
+
+        expect(newState.currentCharacter).toBe(1);
+
+        newState = hideEditCharacterFormReducer(state);
+
+        expect(newState.currentCharacter).toBeNull();
     });
 
     it('hides the dialog editor', () => {
@@ -23,6 +47,28 @@ describe('Interface Reducers', () => {
         newState = hideEditDialogReducer(state);
         
         expect(newState.showDialogEditor).toBe(false);
+    });
+
+    it('hides all windows except stage select when stage editor is closed', () => {
+        let newState = showEditStageFormReducer(
+            showEditDialogReducer(
+                showCharacterSelectReducer(
+                    showEditCharacterFormReducer(state, 0)
+                )
+            ), 0
+        );
+
+        expect(newState.currentStage).toBe(0);
+        expect(newState.showDialogEditor).toBe(true);
+        expect(newState.showCharacterSelect).toBe(true);
+        expect(newState.currentCharacter).toBe(0);
+
+        newState = hideEditStageFormReducer(state);
+
+        expect(newState.currentStage).toBe(null);
+        expect(newState.showDialogEditor).toBe(false);
+        expect(newState.showCharacterSelect).toBe(false);
+        expect(newState.currentCharacter).toBe(null);
     });
 
     it('shows the character select', () => {

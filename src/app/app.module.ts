@@ -27,6 +27,7 @@ import { INITIAL_STATE } from './store-settings/store-defaults';
 import { IAppState } from './store-settings/store-types';
 import { CharacterSelectComponent } from './character-select/character-select.component';
 import { CharacterFormComponent } from './character-form/character-form.component';
+import { WindowCloseButtonComponent } from './window-close-button/window-close-button.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/editor', pathMatch: 'full' },
@@ -41,7 +42,8 @@ const appRoutes: Routes = [
     StageSelectComponent,
     StageFormComponent,
     CharacterSelectComponent,
-    CharacterFormComponent
+    CharacterFormComponent,
+    WindowCloseButtonComponent
   ],
   imports: [
     RouterModule.forRoot(

@@ -1,10 +1,5 @@
-<button color="warn"
-  mat-mini-fab>
-  <mat-icon aria-label="delete character"
-    (click)="deleteThisCharacter()">
-    delete
-  </mat-icon>
-</button>
+<app-window-close-button (clickedClose)="close()">
+</app-window-close-button>
 <form class="form-container"
   [formGroup]="form"
   >
@@ -28,19 +23,20 @@
   </mat-form-field>
   <label>Mood Image URLs</label>
   <mat-list role="list">
+    <label>Mood</label><label>URL</label>
     <mat-list-item *ngFor="let mood of moods | keyvalue; index as i"
       role="listItem">
       <mat-form-field>
-        <input [formControlName]="'moodKey' + mood.key"
+        <input [formControlName]="moodKeyPrefix + mood.key"
           matInput
-          [name]="'moodKey' + mood.key"
+          [name]="moodKeyPrefix + mood.key"
           required
           [value]="mood.key">
       </mat-form-field>
       <mat-form-field>
-        <input [formControlName]="'moodValue' + mood.key"
+        <input [formControlName]="moodValuePrefix + mood.key"
           matInput
-          [name]="'moodValue' + mood.key"
+          [name]="moodValuePrefix + mood.key"
           required
           [value]="mood.value">
       </mat-form-field>
@@ -54,5 +50,12 @@
     type="button"
     >
     Submit
+  </button>
+  <button color="warn"
+    mat-mini-fab>
+    <mat-icon aria-label="delete character"
+      (click)="deleteThisCharacter()">
+      delete
+    </mat-icon>
   </button>
 </form>
