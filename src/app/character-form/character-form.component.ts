@@ -1,10 +1,12 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { select, NgRedux } from '@angular-redux/store';
-import { CharacterType, IAppState } from '../store-settings/store-types';
+import { CharacterType, IAppState, MoodType } from '../store-settings/store-types';
 import { merge, Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { urlValidator } from '../global-utils/validator-utils';
 import { addCharacterActionCreator, editCharacterActionCreator, deleteCharacterActionCreator, hideEditCharacterFormActionCreator } from '../actions';
+import { getMoods } from '../global-utils/state-utils';
 
 const REQUIRED_PROPS = {
   NAME: 'name',
@@ -19,45 +21,52 @@ const REQUIRED_PROPS = {
 export class CharacterFormComponent implements AfterViewInit {
   @select(state => state.characters[state.currentCharacter])
     characterData$: Observable<CharacterType>
-  @select(state => state.currentCharacter) characterIndex$: number;
-  character: Subscription;
+  @select(state => state.currentCharacter) characterIndex$: Observable<number>;
+  @select(state => getMoods(state)) moods$: Observable<MoodType>;
   form: FormGroup;
   isNewCharacter: boolean;
   moodKeyPrefix = 'moodKey';
   moodValuePrefix = 'moodValue';
-  moods = { ambivalent: 'http://tim.com/pensiveTim.jpg', cyborgMode: 'http://tim.com/robotTim.jpg' };
+  moods = {};
+  stateSub: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private ngRedux: NgRedux<IAppState>
   ) {
-    const formGroupObj = {
-      name: ['', Validators.required],
-      defaultImageURL: ['', [Validators.required, urlValidator]]
-    };
-    for (const mood in this.moods) {
-      formGroupObj[this.moodKeyPrefix+mood] = [mood, Validators.required]
-      formGroupObj[this.moodValuePrefix+mood] = [this.moods[mood], Validators.required]
-    }
-    this.form = this.fb.group(formGroupObj);
+    this.updateFormGroup();
   }
 
   ngAfterViewInit() {
-    this.character = merge(this.characterData$, this.characterIndex$)
-      .subscribe((x: any) => {
-        if (x == null) {
-          return;
-        }
-        if (isNaN(x)) {
+    this.stateSub = merge(
+      this.characterData$.pipe(
+        tap((x: CharacterType) => {
+          if (x == null) {
+            return;
+          }
           this.form.get(REQUIRED_PROPS.NAME).setValue(x.name);
           this.form.get(REQUIRED_PROPS.DEFAULT_IMAGE_URL)
             .setValue(x.defaultImageURL);
           this.isNewCharacter = false;
-        } else if (x === -1) {
-          this.form.reset();
-          this.isNewCharacter = true;
-        }
-      });
+      })),
+      this.characterIndex$.pipe(
+        tap((x: number) => {
+          if (x === -1) {
+            this.form.reset();
+            this.isNewCharacter = true;
+          }
+        })
+      ),
+      this.moods$.pipe(
+        tap((x: MoodType) => {
+          if (x == null) {
+            return;
+          }
+          this.moods = x;
+          this.updateFormGroup();
+        }))
+      )
+      .subscribe(() => {});
   }
 
   close() {
@@ -85,6 +94,18 @@ export class CharacterFormComponent implements AfterViewInit {
     return res;
   }
 
+  updateFormGroup() {
+    const formGroupObj = {
+      name: ['', Validators.required],
+      defaultImageURL: ['', [Validators.required, urlValidator]]
+    };
+    for (const mood in this.moods) {
+      formGroupObj[this.moodKeyPrefix+mood] = [mood, Validators.required]
+      formGroupObj[this.moodValuePrefix+mood] = [this.moods[mood], Validators.required]
+    }
+    this.form = this.fb.group(formGroupObj);
+  }
+
   onSubmit() {
     const dispatchObj = this.parseForm(this.form.getRawValue());
     const toDispatch = this.isNewCharacter
@@ -96,7 +117,7 @@ export class CharacterFormComponent implements AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.character.unsubscribe();
+    this.stateSub.unsubscribe();
   }
 
 }

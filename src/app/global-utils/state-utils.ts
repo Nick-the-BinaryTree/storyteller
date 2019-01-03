@@ -5,7 +5,10 @@ export const getAct = (state: IAppState): ActType => (
 );
 
 export const getMoods = (state: IAppState): MoodType => (
-    state.characters[state.currentCharacter].moodImageURLs
+    state.currentCharacter != null &&
+        state.characters[state.currentCharacter] != null
+        ? state.characters[state.currentCharacter].moodImageURLs
+        : null
 );
 
 export const  getStage = (state: IAppState): StageType => {

@@ -3,7 +3,7 @@ import { ActType, IAppState } from "./store-types";
 export const TEST_CHARACTER = {
     name: 'Mortimore',
     defaultImageURL: '',
-    moodImageURLs: {}
+    moodImageURLs: { ambivalent: 'http://tim.com/pensiveTim.jpg', cyborgMode: 'http://tim.com/robotTim.jpg' }
 };
 export const TEST_CHARACTER_2 = {
     name: 'Zebra Leader',
