@@ -1,5 +1,6 @@
 export type FourTreeNodeType = {
     dialog: string,
+    index: number,
     mood: string,
     nextAct: boolean,
     speaker: string
@@ -8,7 +9,7 @@ export type FourTreeArrayType = Array<FourTreeNodeType>;
 
 export const createFourTreeNode = (dialog: string, mood: string, 
     nextAct: boolean, speaker: string) => ({
-    dialog, mood, nextAct, speaker
+    dialog, index: null, mood, nextAct, speaker
 });
 
 export class FourTree {
@@ -27,7 +28,8 @@ export class FourTree {
             return;
         }
         this.arr[j] = n;
-        
+        n.index = j;
+
         const newRequiredLength = this.kthChild(j, 4);
 
         while (this.arr.length < newRequiredLength) {
@@ -48,6 +50,23 @@ export class FourTree {
 
     get(i: number): FourTreeNodeType {
         return this.arr[i];
+    }
+
+    getChildNodes(n: FourTreeNodeType): Array<FourTreeNodeType> {
+        const res = [];
+
+        for (let k=1; k<=4; k++) {
+            const kid = this.get(this.kthChild(n.index, k));
+
+            if (kid != null) {
+                res.push(kid);
+            }
+        }
+        return res;
+    }
+
+    hasChildNodes(n: FourTreeNodeType): boolean {
+        return this.getChildNodes(n).length !== 0;
     }
 
     kthChild(i: number, k: number) {

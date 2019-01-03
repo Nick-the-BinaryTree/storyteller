@@ -2,6 +2,7 @@ import { FourTree } from './four-tree';
 
 const TEST_NODE = {
     dialog: 'hi',
+    index: null,
     mood: '',
     nextAct: false,
     speaker: 'Gerald'
@@ -23,7 +24,7 @@ describe('Four Tree test suite', () => {
         t.add(0, TEST_NODE);
         
         expect(t.arr.length).toBe(5); // make room for kids
-        expect(t.get(0)).toBe(TEST_NODE);
+        expect(t.get(0)).toBe({ ...TEST_NODE, index: 0 });
     });
 
     it('adds six nodes', () => {
@@ -35,7 +36,7 @@ describe('Four Tree test suite', () => {
         t.add(1, TEST_NODE); // grandchild 1 of child 1
 
         expect(t.arr.length).toBe(24);
-        expect(t.get(5)).toBe(TEST_NODE);
+        expect(t.get(5)).toBe({ ...TEST_NODE, index: 5 });
         expect(t.get(23)).toBe(null);
     });
 
@@ -43,7 +44,6 @@ describe('Four Tree test suite', () => {
         t.add(0, TEST_NODE);
         
         expect(t.arr.length).toBe(5);
-        expect(t.get(0)).toBe(TEST_NODE);
 
         t.remove(0);
 
@@ -73,15 +73,15 @@ describe('Four Tree test suite', () => {
 
         expect(t.arr.length).toBe(24);
 
-        expect(t.get(5)).toBe(TEST_NODE);
+        expect(t.get(5)).toBe({ ...TEST_NODE, index: 5 });
         t.remove(5);
         expect(t.get(5)).toBeNull();
 
-        expect(t.get(4)).toBe(TEST_NODE);
+        expect(t.get(5)).toBe({ ...TEST_NODE, index: 4 });
         t.remove(4);
         expect(t.get(4)).toBeNull();
 
-        expect(t.get(3)).toBe(TEST_NODE);
+        expect(t.get(5)).toBe({ ...TEST_NODE, index: 3 });
         t.remove(3);
         expect(t.get(3)).toBeNull();
 
@@ -98,15 +98,15 @@ describe('Four Tree test suite', () => {
         t.add(5, TEST_NODE); // great-grandchild 1 of child 1
 
         expect(t.arr.length).toBe(88);
-        expect(t.get(1)).toBe(TEST_NODE);
-        expect(t.get(5)).toBe(TEST_NODE);
-        expect(t.get(21)).toBe(TEST_NODE);
+        expect(t.get(1)).toBe({ ...TEST_NODE, index: 1 });
+        expect(t.get(5)).toBe({ ...TEST_NODE, index: 5 });
+        expect(t.get(21)).toBe({ ...TEST_NODE, index: 21 });
         
         t.remove(1);
 
         expect(t.arr.length).toBe(88);
-        expect(t.get(5)).toBe(null);
-        expect(t.get(5)).toBe(null);
-        expect(t.get(21)).toBe(null);
+        expect(t.get(5)).toBeNull();
+        expect(t.get(5)).toBeNull();
+        expect(t.get(21)).toBeNull();
     });
 });

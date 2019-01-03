@@ -22,6 +22,8 @@ export class StageEditorIndexComponent implements OnInit {
   showDialogEditor: boolean;
   stateSub: Subscription;
 
+  tmp = {dialog:'hi', mood:'excellent', nextAct: false, speaker: 'pasta boy', index: 0}
+
   constructor(private ngRedux: NgRedux<IAppState>) { }
 
   ngOnInit() {

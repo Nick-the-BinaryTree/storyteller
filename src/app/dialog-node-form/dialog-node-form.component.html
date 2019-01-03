@@ -1,0 +1,34 @@
+<label>Speaker</label>
+<mat-form-field>
+  <mat-select name="speaker"
+    [(ngModel)]="speaker"
+    placeholder="Who sayeth this"
+    required>
+    <mat-option *ngFor="let s of speakers"
+      [value]="s">
+      {{s}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>>
+<label>Dialog</label>
+<mat-form-field>
+  <input matInput
+    name="dialog"
+    [(ngModel)]="dialog"
+    placeholder="A line of dialog goeth here"
+    required>
+</mat-form-field>
+<label>Mood</label>
+<mat-form-field>
+  <mat-select name="mood"
+    [(ngModel)]="mood"
+    placeholder="The speaker's mood">
+    <mat-option *ngFor="let m of moods"
+      [value]="m">
+      {{m}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-checkbox [(ngModel)]="nextAct">
+  Triggers Next Act
+</mat-checkbox>
