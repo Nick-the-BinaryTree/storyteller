@@ -54,8 +54,9 @@ export class CharacterFormComponent implements AfterViewInit {
       this.characterIndex$.pipe(
         tap((x: number) => {
           if (x === -1) {
-            this.form.reset();
+            this.moods = {};
             this.isNewCharacter = true;
+            this.form.reset();
           }
         })
       ),
@@ -65,6 +66,7 @@ export class CharacterFormComponent implements AfterViewInit {
             return;
           }
           this.moods = x;
+          this.isNewCharacter = false;
           this.updateFormGroup();
         }))
       )
@@ -72,13 +74,14 @@ export class CharacterFormComponent implements AfterViewInit {
   }
 
   addMood() {
-    const dispatchObj = this.parseForm(this.form.getRawValue());
+    this.saveProgress();
+    this.moods[''] = '';
 
-    dispatchObj.moodImageURLs['']='';
-    this.createOrEdit(dispatchObj);
+    this.updateFormGroup();
   }
 
   close() {
+    this.form.reset();
     this.ngRedux.dispatch(hideEditCharacterFormActionCreator());
   }
 
@@ -91,10 +94,10 @@ export class CharacterFormComponent implements AfterViewInit {
   }
 
   deleteMood(mood: string) {
-    const dispatchObj = this.parseForm(this.form.getRawValue());
+    this.saveProgress();
+    delete this.moods[mood];
 
-    delete dispatchObj.moodImageURLs[mood];
-    this.createOrEdit(dispatchObj);
+    this.updateFormGroup();
   }
 
   deleteThisCharacter() {
@@ -118,6 +121,14 @@ export class CharacterFormComponent implements AfterViewInit {
     return res;
   }
 
+  saveProgress() {
+    const { name, defaultImageURL, moodImageURLs } = this.parseForm(this.form.getRawValue());
+
+    this.name = name;
+    this.defaultImageURL = defaultImageURL;
+    this.moods = moodImageURLs;
+  }
+
   updateFormGroup() {
     const formGroupObj = {
       name: [this.name, Validators.required],
@@ -125,7 +136,7 @@ export class CharacterFormComponent implements AfterViewInit {
     };
     for (const mood in this.moods) {
       formGroupObj[this.moodKeyPrefix+mood] = [mood, Validators.required]
-      formGroupObj[this.moodValuePrefix+mood] = [this.moods[mood], Validators.required, urlValidator]
+      formGroupObj[this.moodValuePrefix+mood] = [this.moods[mood], [Validators.required, urlValidator]]
     }
     this.form = this.fb.group(formGroupObj);
   }
