@@ -3,10 +3,10 @@
 <form class="form-container"
   [formGroup]="form">
   <mat-card>
-      <mat-card-title>
-        Characters
-      </mat-card-title>
-    </mat-card>
+    <mat-card-title>
+      Characters
+    </mat-card-title>
+  </mat-card>
     <mat-list formArrayName="selected" role="list">
       <mat-list-item *ngFor="let char of displayCharacters; index as i"
         [ngClass]="{'editing': (currentCharacter$ | async)===globalCharacterIndex(i)}"

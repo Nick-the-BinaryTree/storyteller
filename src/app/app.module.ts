@@ -12,6 +12,7 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatListModule,
+  MatTreeModule
 } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from
@@ -28,6 +29,7 @@ import { IAppState } from './store-settings/store-types';
 import { CharacterSelectComponent } from './character-select/character-select.component';
 import { CharacterFormComponent } from './character-form/character-form.component';
 import { WindowCloseButtonComponent } from './window-close-button/window-close-button.component';
+import { DialogEditorComponent } from './dialog-editor/dialog-editor.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/editor', pathMatch: 'full' },
@@ -43,7 +45,8 @@ const appRoutes: Routes = [
     StageFormComponent,
     CharacterSelectComponent,
     CharacterFormComponent,
-    WindowCloseButtonComponent
+    WindowCloseButtonComponent,
+    DialogEditorComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -61,6 +64,7 @@ const appRoutes: Routes = [
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatTreeModule,
     NgReduxModule,
     ReactiveFormsModule
   ],

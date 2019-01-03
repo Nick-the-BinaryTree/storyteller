@@ -38,7 +38,13 @@
     color="accent"
     mat-flat-button
     >
-    Add character
+    Add Character
+  </button>
+  <button (click)="showDialogEditor()"
+    color="accent"
+    mat-flat-button
+    >
+    Edit Dialog
   </button>
   <!-- Can't use submit button b/c material bug https://github.com/angular/material2/issues/4190 -->
   <button (click)="onSubmit()"
