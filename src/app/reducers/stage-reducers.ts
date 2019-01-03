@@ -11,7 +11,6 @@ export const addStageReducer = (state: IAppState,
         return state;
     }
     act.stages.push(payload);
-    newState.currentStage = null;
 
     return newState;
 };
@@ -37,7 +36,6 @@ export const editStageReducer = (state: IAppState,
     act.stages[
         act.stages.map(s => s.name).indexOf(payload.name)
     ] = payload;
-    newState.currentStage = null;
 
     return newState;
 };

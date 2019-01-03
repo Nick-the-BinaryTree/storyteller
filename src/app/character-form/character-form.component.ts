@@ -23,11 +23,13 @@ export class CharacterFormComponent implements AfterViewInit {
     characterData$: Observable<CharacterType>
   @select(state => state.currentCharacter) characterIndex$: Observable<number>;
   @select(state => getMoods(state)) moods$: Observable<MoodType>;
+  defaultImageURL: string = '';
   form: FormGroup;
   isNewCharacter: boolean;
   moodKeyPrefix = 'moodKey';
   moodValuePrefix = 'moodValue';
-  moods = {};
+  moods: MoodType = {};
+  name: string = '';
   stateSub: Subscription;
 
   constructor(
@@ -44,10 +46,10 @@ export class CharacterFormComponent implements AfterViewInit {
           if (x == null) {
             return;
           }
-          this.form.get(REQUIRED_PROPS.NAME).setValue(x.name);
-          this.form.get(REQUIRED_PROPS.DEFAULT_IMAGE_URL)
-            .setValue(x.defaultImageURL);
+          this.name = x.name;
+          this.defaultImageURL = x.defaultImageURL;
           this.isNewCharacter = false;
+          this.updateFormGroup();
       })),
       this.characterIndex$.pipe(
         tap((x: number) => {
@@ -69,8 +71,30 @@ export class CharacterFormComponent implements AfterViewInit {
       .subscribe(() => {});
   }
 
+  addMood() {
+    const dispatchObj = this.parseForm(this.form.getRawValue());
+
+    dispatchObj.moodImageURLs['']='';
+    this.createOrEdit(dispatchObj);
+  }
+
   close() {
     this.ngRedux.dispatch(hideEditCharacterFormActionCreator());
+  }
+
+  createOrEdit(dispatchObj: CharacterType) {
+    const toDispatch = this.isNewCharacter
+      ? addCharacterActionCreator(dispatchObj)
+      : editCharacterActionCreator(dispatchObj);
+    
+    this.ngRedux.dispatch(toDispatch);
+  }
+
+  deleteMood(mood: string) {
+    const dispatchObj = this.parseForm(this.form.getRawValue());
+
+    delete dispatchObj.moodImageURLs[mood];
+    this.createOrEdit(dispatchObj);
   }
 
   deleteThisCharacter() {
@@ -96,23 +120,19 @@ export class CharacterFormComponent implements AfterViewInit {
 
   updateFormGroup() {
     const formGroupObj = {
-      name: ['', Validators.required],
-      defaultImageURL: ['', [Validators.required, urlValidator]]
+      name: [this.name, Validators.required],
+      defaultImageURL: [this.defaultImageURL, [Validators.required, urlValidator]]
     };
     for (const mood in this.moods) {
       formGroupObj[this.moodKeyPrefix+mood] = [mood, Validators.required]
-      formGroupObj[this.moodValuePrefix+mood] = [this.moods[mood], Validators.required]
+      formGroupObj[this.moodValuePrefix+mood] = [this.moods[mood], Validators.required, urlValidator]
     }
     this.form = this.fb.group(formGroupObj);
   }
 
   onSubmit() {
     const dispatchObj = this.parseForm(this.form.getRawValue());
-    const toDispatch = this.isNewCharacter
-      ? addCharacterActionCreator(dispatchObj)
-      : editCharacterActionCreator(dispatchObj);
-    
-    this.ngRedux.dispatch(toDispatch);
+    this.createOrEdit(dispatchObj);
     this.close();
   }
 

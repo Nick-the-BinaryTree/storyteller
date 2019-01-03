@@ -79,7 +79,6 @@ export const editCharacterReducer = (state: IAppState,
     newState.characters[
         newState.characters.map(c => c.name).indexOf(payload.name)
     ] = payload;
-    newState.currentCharacter = null;
     
     return newState;
 }

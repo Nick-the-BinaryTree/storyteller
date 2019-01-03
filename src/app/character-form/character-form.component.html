@@ -40,8 +40,18 @@
           required
           [value]="mood.value">
       </mat-form-field>
+      <button (click)="deleteMood(mood.key)" mat-mini-fab>
+          <mat-icon aria-label="delete mood">
+            delete
+          </mat-icon>
+      </button>
     </mat-list-item>
   </mat-list>
+  <button (click)="addMood()" mat-mini-fab>
+      <mat-icon aria-label="add mood">
+        add
+      </mat-icon>
+  </button>
   <!-- Can't use submit button b/c material bug https://github.com/angular/material2/issues/4190 -->
   <button (click)="onSubmit()"
     color="primary"

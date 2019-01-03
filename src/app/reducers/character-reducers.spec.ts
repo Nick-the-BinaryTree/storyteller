@@ -181,7 +181,7 @@ describe('editCharacterReducer', () => {
         const fakeImgURL = 'https://hi.jpg';
         let newState = addCharacterReducer(state, TEST_CHARACTER);
 
-        expect(newState.characters[0].defaultImageURL).toBe('');
+        expect(newState.characters[0].defaultImageURL).toBe(TEST_CHARACTER.defaultImageURL);
 
         newState = editCharacterReducer(newState,
             { ...TEST_CHARACTER, defaultImageURL: fakeImgURL });
