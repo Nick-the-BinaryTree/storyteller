@@ -3,7 +3,8 @@
   <mat-select name="speaker"
     placeholder="Who sayeth this"
     required
-    (selectionChange)="onSpeakerChange($event)">
+    (selectionChange)="onSpeakerChange($event)"
+    [value]="speaker">
     <mat-option *ngFor="let s of speakers"
       [value]="s">
       {{s}}
@@ -16,19 +17,22 @@
     matInput
     name="dialog"
     placeholder="A line of dialog goeth here"
-    required>
+    required
+    [value]="dialog">
 </mat-form-field>
 <label>Mood</label>
 <mat-form-field>
   <mat-select name="mood"
     placeholder="The speaker's mood"
-    (selectionChange)="onMoodChange($event)">
+    (selectionChange)="onMoodChange($event)"
+    [value]="mood">
     <mat-option *ngFor="let m of moods"
       [value]="m">
       {{m}}
     </mat-option>
   </mat-select>
 </mat-form-field>
-<mat-checkbox (change)="onNextActChange($event)">
+<mat-checkbox (change)="onNextActChange($event)"
+  [checked]="nextAct">
   Triggers Next Act
 </mat-checkbox>

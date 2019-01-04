@@ -17,15 +17,15 @@ export class FourTree {
 
     constructor() { }
 
-    add(i: number, n: FourTreeNodeType) {
+    add(i: number, n: FourTreeNodeType): number {
         if (i === 0 && this.arr[i] == null) {
-            this.arr = [n, null, null, null, null];
+            this.arr = [{ ...n, index: 0 }, null, null, null, null];
             return;
         }
         const j = this.firstFreeKid(i);
 
         if (j == null) {
-            return;
+            return null;
         }
         this.arr[j] = n;
         n.index = j;
@@ -35,6 +35,8 @@ export class FourTree {
         while (this.arr.length < newRequiredLength) {
             this.arr.push(null);
         }
+
+        return j;
     }
 
     firstFreeKid(i: number): number {
