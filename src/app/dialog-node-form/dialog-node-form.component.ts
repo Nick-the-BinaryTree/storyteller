@@ -1,15 +1,16 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FourTreeNodeType } from 'src/data-structures/four-tree';
 import { NgRedux, select } from '@angular-redux/store';
 import { CharacterType, IAppState } from '../store-settings/store-types';
 import { Observable, Subscription } from 'rxjs';
+import { MatSelectChange, MatCheckboxChange } from '@angular/material';
 
 @Component({
   selector: 'app-dialog-node-form',
   templateUrl: './dialog-node-form.component.html',
   styleUrls: ['./dialog-node-form.component.css']
 })
-export class DialogNodeFormComponent implements OnChanges, OnInit {
+export class DialogNodeFormComponent implements OnInit {
   @select(state => state.characters)
     characters$: Observable<Array<CharacterType>>;
   @Input() data: FourTreeNodeType;
@@ -32,6 +33,7 @@ export class DialogNodeFormComponent implements OnChanges, OnInit {
 
     this.characterSub = this.characters$
       .subscribe((characters: Array<CharacterType>) => {
+      this.characters = characters;
       this.speakers = characters.map((c: CharacterType) => c.name);
 
       this.updateMoods();
@@ -41,21 +43,26 @@ export class DialogNodeFormComponent implements OnChanges, OnInit {
   updateMoods() {
     const selectedCharIndex = this.speakers.indexOf(this.speaker);
 
-    if (selectedCharIndex !== -1) {
+    if (selectedCharIndex !== -1 && this.characters != null) {
       this.moods = Object.keys(this.characters[selectedCharIndex].moodImageURLs);
     }
-    console.log(selectedCharIndex);
-    console.log(this.moods);
   }
 
-  // convert from double bind to funcs
+  onDialogChange(e: Event) {
+    this.dialog = this.data.dialog = (<HTMLInputElement>e.target).value;
+  }
 
-  onSpeakerSelect() {
-    this.data.dialog = this.dialog;
-    this.data.mood = this.mood;
-    this.data.nextAct = this.nextAct;
-    this.data.speaker = this.speaker;
-    
+  onMoodChange(e: MatSelectChange) {
+    this.mood = this.data.mood = e.value;
+  }
+
+  onNextActChange(e: MatCheckboxChange) {
+    this.nextAct = this.data.nextAct = e.checked;
+  }
+
+  onSpeakerChange(e: MatSelectChange) {
+    this.speaker = this.data.speaker = e.value;
+
     this.updateMoods();
   }
 
